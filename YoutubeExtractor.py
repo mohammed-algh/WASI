@@ -3,13 +3,26 @@ from googleapiclient.discovery import build
 import re
 from comment_Classifier import classify
 from Preprocessing import clean_youtube
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
+
 
 api_key = 'AIzaSyCeOTkJfH0_XNhpzeVg3zrDF3Xetgjbt9w'
 
 all_comments = []
 
+def get_video_id(link:str)->str:
+
+    full_url = unshorten_url(link)
+    parsed_url = urlparse(full_url)
+
+    # get the video id from the url
+    videoId = parse_qs(parsed_url.query)['v'][0]
+
+    return videoId
+
 # function for unshort urls
-def unshorten_url(url):
+def unshorten_url(url:str)->str:
     session = requests.Session()
     response = session.head(url, allow_redirects=True)
     return response.url
@@ -60,7 +73,14 @@ def get_comments(youtube, video_id, next_view_token):
     else:
         return
 
-def startGet(video_id, choice):
+def startGet(link:str, choice:str):
+    global video_id
+    try:
+        video_id = get_video_id(link)
+    except:
+        print("Invalid link\n")
+        raise ValueError("Invalid link")
+
     yt_object = build('youtube', 'v3', developerKey=api_key)
 
     # get all comments

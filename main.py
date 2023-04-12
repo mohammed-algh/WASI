@@ -1,31 +1,15 @@
-from urllib.parse import urlparse
-from urllib.parse import parse_qs
-from YoutubeExtractor import unshorten_url, startGet
+
+from YoutubeExtractor import startGet
 
 condition = True
 
 while condition:
 
-    try:
-
-        url = str(input("Enter Youtube link: "))
-        urlC = unshorten_url(url)
-        parsed_url = urlparse(urlC)
-
-        # get the video id from the url
-        videoId = parse_qs(parsed_url.query)['v'][0]
-
-    except:
-        print("Invalid link")
-        print()
-        continue
-
-
-
+    link = str(input("Enter Video Link: "))
     try:
 
             # classifiers menu
-        choice = int(input("Choose:\n"
+        output = int(input("Choose:\n"
                            "1- SVM\n"
                            "2- Naive Bayes\n"
                            "3- Logistic Regression\n"
@@ -33,7 +17,24 @@ while condition:
                            "5- Decision Tree\n"
                            "6- Random forest\n"))
 
-        recommendation = startGet(videoId, choice)
+        if output == 1:
+            choice = "SVM"
+        elif output == 2:
+            choice = "Naive Bayes (Recommended)"
+        elif output == 3:
+            choice = "Logistic Regression"
+        elif output == 4:
+            choice = "KNN"
+        elif output == 5:
+            choice = "Decision Tree"
+        elif output == 6:
+            choice = "Random Forest"
+        else:
+            print("Wrong input")
+
+
+
+        recommendation = startGet(link, choice)
         print(recommendation)
 
     except Exception as e:
