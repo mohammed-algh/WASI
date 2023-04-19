@@ -53,13 +53,13 @@ if st.button("Analyze"):
         progress_bar = progress_placeholder.progress(0)  # initialize the progress bar with 0% inside the progress_placeholder
         message_message = analyze(link, radio,progress_bar)
         if message_message:
-            message_placeholder.write(message_message)
+            message_placeholder.write("<span style='color: #f9c13c;'>"+message_message+"</span>", unsafe_allow_html=True)
         else:
             message_placeholder.empty()  # clear the error message if there are no errors
         progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
         progress_bar.empty()  # clear the progress bar once analysis is done
     else:
-        message_placeholder.write("Invalid link")
+         message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
 
 
 

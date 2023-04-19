@@ -20,17 +20,17 @@ def recommendation(prediction: np.ndarray,progress_bar):
         raise ValueError('Percentage must be between 0 and 100')
 
     if percentage <= 30:
-        return f"not recommended ({percentage}%)"
+        return f"Not recommended ({percentage}%)"
     elif percentage <= 50:
-        return f"unlikely to be effective ({percentage}%)"
+        return f"Unlikely to be effective ({percentage}%)"
     elif percentage <= 60:
-        return f"moderately effective ({percentage}%)"
+        return f"Moderately effective ({percentage}%)"
     elif percentage <= 70:
-        return f"recommended ({percentage}%)"
+        return f"Recommended ({percentage}%)"
     elif percentage <= 80:
-        return f"highly recommended ({percentage}%)"
+        return f"Highly recommended ({percentage}%)"
     elif percentage <= 100:
-        return f"strongly recommended ({percentage}%)"
+        return f"Strongly recommended ({percentage}%)"
 
 # classify function to start predicting
 def classify(comments_list:list, choice:str,progress_bar):
@@ -40,7 +40,7 @@ def classify(comments_list:list, choice:str,progress_bar):
     progress_bar.progress(57)
     time.sleep(0.1)
     if len(X) == 0:
-        raise ValueError("Not Enough comments to analyze")
+        raise ValueError("Not enough comments to analyze the video")
 
 
     # SVM
