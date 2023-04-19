@@ -1,6 +1,20 @@
 import streamlit as st
 from YoutubeExtractor import startGet
 import re
+import base64
+from pathlib import Path
+
+def img_to_bytes(img_path):
+    img_bytes = Path(img_path).read_bytes()
+    encoded = base64.b64encode(img_bytes).decode()
+    return encoded
+def img_to_html(img_path):
+    img_html = "<img src='data:image/png;base64,{}' style='max-width: 300px;' class='img-fluid'>".format(
+      img_to_bytes(img_path)
+    )
+    return img_html
+
+
 def analyze(link:str, classifier:str,progress_bar):
     try:
         if link.strip():  # check if the link parameter is not empty or whitespace
@@ -20,10 +34,9 @@ def analyze(link:str, classifier:str,progress_bar):
     except Exception as e:
         return str(e)
 
-st.image("Wasi Logo.png", width=200)
-st.title("WASI | Arabic Youtube Recommender")
+st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Wasi Logo.png')+"</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>WASI | Arabic Youtube Recommender</h1>", unsafe_allow_html=True)
 
-st.markdown("---")
 link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
 with st.expander("Advance Settings"):
