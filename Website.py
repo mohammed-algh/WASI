@@ -36,7 +36,7 @@ def analyze(link:str, classifier:str,progress_bar):
         return str(e)
 
 st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Wasi Logo.png')+"</p>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
+#st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
 
 link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
