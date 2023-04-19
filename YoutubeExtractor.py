@@ -5,20 +5,20 @@ from comment_Classifier import classify
 from Preprocessing import clean_youtube
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
-
-
+import time
 api_key = 'AIzaSyCeOTkJfH0_XNhpzeVg3zrDF3Xetgjbt9w'
 
 all_comments = []
 
-def get_video_id(link:str)->str:
-
+def get_video_id(link:str,progress_bar)->str:
     full_url = unshorten_url(link)
+    progress_bar.progress(0)
     parsed_url = urlparse(full_url)
-
     # get the video id from the url
     videoId = parse_qs(parsed_url.query)['v'][0]
-
+    time.sleep(0.5)
+    progress_bar.progress(15)
+    time.sleep(0.5)
     return videoId
 
 # function for unshort urls
@@ -73,10 +73,12 @@ def get_comments(youtube, video_id, next_view_token):
     else:
         return
 
-def startGet(link:str, choice:str):
+def startGet(link:str, choice:str,progress_bar):
     global video_id
     try:
-        video_id = get_video_id(link)
+        video_id = get_video_id(link,progress_bar)
+        progress_bar.progress(30)
+        time.sleep(0.5)
     except:
         print("Invalid link\n")
         raise ValueError("Invalid link")
@@ -85,7 +87,9 @@ def startGet(link:str, choice:str):
 
     # get all comments
     get_comments(yt_object, video_id, '')
-    recommendation = classify(all_comments, choice)
+    progress_bar.progress(50)
+    time.sleep(0.3)
+    recommendation = classify(all_comments, choice,progress_bar)
     return recommendation
 
 
