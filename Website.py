@@ -63,6 +63,7 @@ if st.button("Analyze"):
 
 
 
+st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Uni Logo.png')+"</p>", unsafe_allow_html=True) #Centered Logo
 #Remove hamburger menu + header+  footer
 hide_streamlit_style = """
             <style>
