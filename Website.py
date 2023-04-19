@@ -9,7 +9,7 @@ def img_to_bytes(img_path):
     encoded = base64.b64encode(img_bytes).decode()
     return encoded
 def img_to_html(img_path):
-    img_html = "<img src='data:image/png;base64,{}' style='max-width: 300px;' class='img-fluid'>".format(
+    img_html = "<img src='data:image/png;base64,{}' style='max-width: 230px;' class='img-fluid'>".format(
       img_to_bytes(img_path)
     )
     return img_html
@@ -22,7 +22,8 @@ def analyze(link:str, classifier:str,progress_bar):
             match = re.search(r'\d+', recommendation)  # search for a number in the recommendation string
             num = int(match.group())  # convert the matched string to an integer
             if num > 60:
-                st.success(f"{recommendation}")
+                with st.container():
+                    st.success(f"{recommendation}")
             elif num >=50:
                 st.warning(f"{recommendation}")
             else:
@@ -35,12 +36,12 @@ def analyze(link:str, classifier:str,progress_bar):
         return str(e)
 
 st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Wasi Logo.png')+"</p>", unsafe_allow_html=True)
-st.markdown("<h1 style='text-align: center;'>WASI | Arabic Youtube Recommender</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
 
 link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
 with st.expander("Advance Settings"):
-    radio = st.radio("Choose Classifier:", options=("Naive Bayes (Recommended)","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), )
+    radio = st.radio("Choose Classifier:", options=("Naive Bayes (Recommended)","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
 
 message_placeholder = st.empty()  # initialize the message placeholder
 
@@ -58,3 +59,16 @@ if st.button("Analyze"):
         progress_bar.empty()  # clear the progress bar once analysis is done
     else:
         message_placeholder.write("Invalid link")
+
+
+
+
+#Remove hamburger menu + footer
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
