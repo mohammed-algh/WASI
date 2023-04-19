@@ -37,8 +37,7 @@ def analyze(link:str, classifier:str,progress_bar):
 
 st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Wasi Logo.png')+"</p>", unsafe_allow_html=True) #Centered Logo
 
-# Optional title
-# st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
 
 link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
@@ -64,13 +63,16 @@ if st.button("Analyze"):
 
 
 
-
-#Remove hamburger menu + header + footer
+#Remove hamburger menu + header+  footer
 hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
+            .stProgress > div > div > div > div {
+                background-image: radial-gradient(ellipse at center, #ff6464, #ff0000);
+            }
             </style>
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
