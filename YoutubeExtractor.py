@@ -6,6 +6,8 @@ from Preprocessing import clean_youtube
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
 import time
+import pytube
+
 api_key = 'AIzaSyCeOTkJfH0_XNhpzeVg3zrDF3Xetgjbt9w'
 
 all_comments = []
@@ -89,7 +91,8 @@ def startGet(link:str, choice:str,progress_bar):
     get_comments(yt_object, video_id, '')
     progress_bar.progress(50)
     time.sleep(0.3)
-    recommendation = classify(all_comments, choice,progress_bar)
-    return recommendation
+    recommendation, percentage, df = classify(all_comments, choice,progress_bar)
+
+    return recommendation, percentage, df
 
 
