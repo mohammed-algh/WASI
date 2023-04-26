@@ -111,7 +111,7 @@ with col2:
 with col4:
     if wordcloud_image is not None:
         with st.expander("Display Word Cloud"):
-            st.image(wordcloud_image, width=200, caption='Word Cloud')
+            st.image(wordcloud_image, width=200)
 
 
 st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Uni Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
