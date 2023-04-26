@@ -1,4 +1,4 @@
-import streamlit as st
+
 from YoutubeExtractor import startGet
 import os
 import base64
@@ -8,20 +8,13 @@ from streamlit_cookies_manager import EncryptedCookieManager
 import datetime
 from streamlit_option_menu import option_menu
 from streamlit_extras.switch_page_button import switch_page
-
-
+import streamlit as st
 
 
 st.set_page_config(
-    page_title="WASI"
+    page_title="Wasi",initial_sidebar_state="collapsed"
 )
 
-no_sidebar_style = """
-    <style>
-        div[data-testid="stSidebarNav"] {display: none;}
-    </style>
-"""
-st.markdown(no_sidebar_style, unsafe_allow_html=True)
 
 
 cookies = EncryptedCookieManager(
@@ -115,16 +108,22 @@ with st.form("analysis"):
 
 st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Uni Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
 #Remove hamburger menu + header+  footer
-hide_streamlit_style = """
-            <style>
+
+styles = """
+    <style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
             .stProgress > div > div > div > div {
                 background-image: radial-gradient(ellipse at center, #ff6464, #ff0000);
             }
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+            ul {display: none;}
+    </style>
+"""
+st.markdown(styles, unsafe_allow_html=True)
 
 
+# Initialize a session state variable that tracks the sidebar state (either 'expanded' or 'collapsed').

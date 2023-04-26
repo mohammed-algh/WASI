@@ -9,15 +9,8 @@ from Website import img_to_html
 
 
 st.set_page_config(
-    page_title="history"
+    page_title="History | Wasi",initial_sidebar_state="collapsed"
 )
-
-no_sidebar_style = """
-    <style>
-        div[data-testid="stSidebarNav"] {display: none;}
-    </style>
-"""
-st.markdown(no_sidebar_style, unsafe_allow_html=True)
 
 cookies = EncryptedCookieManager(
     # This prefix will get added to all your cookie names.
@@ -63,3 +56,23 @@ else:
     st.write("No History")
 
 
+#Remove hamburger menu + header+  footer
+
+no_sidebar_style = """
+    <style>
+        div[data-testid="stSidebarNav"] {display: none;}
+        .css-1iyw2u1 {
+        display: none;
+    }
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            .stProgress > div > div > div > div {
+                background-image: radial-gradient(ellipse at center, #ff6464, #ff0000);
+            }
+    </style>
+"""
+st.markdown(no_sidebar_style, unsafe_allow_html=True)
