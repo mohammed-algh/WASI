@@ -9,7 +9,7 @@ from Website import img_to_html
 
 
 st.set_page_config(
-    page_title="History | Wasi",initial_sidebar_state="collapsed"
+    page_title="History | WASI",initial_sidebar_state="collapsed"
 )
 
 cookies = EncryptedCookieManager(

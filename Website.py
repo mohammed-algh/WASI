@@ -12,10 +12,10 @@ import streamlit as st
 
 
 st.set_page_config(
-    page_title="Wasi",initial_sidebar_state="collapsed"
+    page_title="WASI | Arabic Youtube Recommender",initial_sidebar_state="collapsed",layout="wide"
 )
 
-
+wordcloud_image = None
 
 cookies = EncryptedCookieManager(
     # This prefix will get added to all your cookie names.
@@ -48,9 +48,8 @@ def analyze(link:str, classifier:str, progress_bar):
     try:
         if link.strip():  # check if the link parameter is not empty or whitespace
             recommendation, percentage, df, video_title = startGet(link, classifier, progress_bar)  # pass the progress bar object to the startGet function
-
+            global wordcloud_image 
             wordcloud_image = generate_word_cloud(df,percentage)
-            st.image(wordcloud_image, width=300)
 
             if percentage > 60:
                 with st.container():
@@ -74,36 +73,45 @@ st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Wasi L
 st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
 
 # horizontal Menu
-selected2 = option_menu(None, ["WASI", "History"],
+
+
+col1,col2,col3,col4,col5 = st.columns((2.5,5,.7,1.7,.1))
+with col2:
+    selected2 = option_menu(None, ["WASI", "History"],
     icons=['youtube', 'clock-history'],
     menu_icon="cast", default_index=0, orientation="horizontal")
 
-if selected2 == "History":
-    switch_page("history")
-with st.form("analysis"):
-    link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
+    if selected2 == "History":
+        switch_page("history")
+    with st.form("analysis"):
+        link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
-    with st.expander("Advance Settings"):
-        radio = st.radio("Choose Classifier:", options=("Naive Bayes","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
+        with st.expander("Advance Settings"):
+            radio = st.radio("Choose Classifier:", options=("Naive Bayes","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
 
-    message_placeholder = st.empty()  # initialize the message placeholder
+        message_placeholder = st.empty()  # initialize the message placeholder
 
-    progress_placeholder = st.empty()  # initialize the progress placeholder
+        progress_placeholder = st.empty()  # initialize the progress placeholder
 
-    if st.form_submit_button("Analyze"):
-        if link.strip():
-            progress_bar = progress_placeholder.progress(0)  # initialize the progress bar with 0% inside the progress_placeholder
+        if st.form_submit_button("Analyze"):
+            if wordcloud_image is not None:
+                wordcloud_image = None
+            if link.strip():
+                progress_bar = progress_placeholder.progress(0)  # initialize the progress bar with 0% inside the progress_placeholder
 
-            message_message = analyze(link, radio,progress_bar)
-            if message_message:
-                message_placeholder.write("<span style='color: #f9c13c;'>"+message_message+"</span>", unsafe_allow_html=True)
+                message_message = analyze(link, radio,progress_bar)
+                if message_message:
+                    message_placeholder.write("<span style='color: #f9c13c;'>"+message_message+"</span>", unsafe_allow_html=True)
+                else:
+                    message_placeholder.empty()  # clear the error message if there are no errors
+                progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
+                progress_bar.empty()  # clear the progress bar once analysis is done
             else:
-                message_placeholder.empty()  # clear the error message if there are no errors
-            progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
-            progress_bar.empty()  # clear the progress bar once analysis is done
-        else:
-            message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
-
+                message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
+with col4:
+    if wordcloud_image is not None:
+        with st.expander("Display Word Cloud"):
+            st.image(wordcloud_image, width=200, caption='Word Cloud')
 
 
 st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Uni Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
