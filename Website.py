@@ -120,7 +120,6 @@ styles = """
             .stProgress > div > div > div > div {
                 background-image: radial-gradient(ellipse at center, #ff6464, #ff0000);
             }
-            ul {display: none;}
     </style>
 """
 st.markdown(styles, unsafe_allow_html=True)
