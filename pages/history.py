@@ -58,7 +58,7 @@ else:
 
 #Remove hamburger menu + header+  footer
 
-no_sidebar_style = """
+styles = """
     <style>
         div[data-testid="stSidebarNav"] {display: none;}
         .css-1iyw2u1 {
@@ -75,4 +75,4 @@ no_sidebar_style = """
             }
     </style>
 """
-st.markdown(no_sidebar_style, unsafe_allow_html=True)
+st.markdown(styles, unsafe_allow_html=True)
