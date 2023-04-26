@@ -54,7 +54,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         return recommend, percentage, df
 
     # Naive Bayes
-    elif choice == "Naive Bayes (Recommended)":
+    elif choice == "Naive Bayes":
         model = pickle.load(open("classifiers/NB.pkl", "rb"))  # Load Naive Bayes classifier from .pkl file
         y = model.predict(X)  # Predict
         df["prediction"] = y

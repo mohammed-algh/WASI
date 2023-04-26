@@ -1,25 +1,36 @@
 import streamlit as st
 from YoutubeExtractor import startGet
 import os
-import re
 import base64
 from pathlib import Path
 from word_cloud import generate_word_cloud
 from streamlit_cookies_manager import EncryptedCookieManager
 import datetime
+from streamlit_option_menu import option_menu
+from streamlit_extras.switch_page_button import switch_page
+
+
 
 
 st.set_page_config(
     page_title="WASI"
 )
 
+no_sidebar_style = """
+    <style>
+        div[data-testid="stSidebarNav"] {display: none;}
+    </style>
+"""
+st.markdown(no_sidebar_style, unsafe_allow_html=True)
+
 
 cookies = EncryptedCookieManager(
     # This prefix will get added to all your cookie names.
     # This way you can run your app on Streamlit Cloud without cookie name clashes with other apps.
-    prefix="ktosiek/streamlit-cookies-manager/",
+    prefix="WASI/History/",
     # You should really setup a long COOKIES_PASSWORD secret if you're running on Streamlit Cloud.
     password=os.environ.get("COOKIES_PASSWORD", "a^#V3xpk[`YUkG8>"),
+
 )
 if not cookies.ready():
     # Wait for the component to load and send us current cookies.
@@ -43,7 +54,7 @@ def img_to_html(img_path):
 def analyze(link:str, classifier:str, progress_bar):
     try:
         if link.strip():  # check if the link parameter is not empty or whitespace
-            recommendation, percentage, df = startGet(link, classifier, progress_bar)  # pass the progress bar object to the startGet function
+            recommendation, percentage, df, video_title = startGet(link, classifier, progress_bar)  # pass the progress bar object to the startGet function
 
             wordcloud_image = generate_word_cloud(df,percentage)
             st.image(wordcloud_image, width=300)
@@ -55,7 +66,7 @@ def analyze(link:str, classifier:str, progress_bar):
                 st.warning(f"{recommendation}")
             else:
                 st.error(f"{recommendation}")
-            cookies[str(datetime.datetime.now())] = f"{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
+            cookies[str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
             cookies.save()
             progress_bar.empty()  # clear the progress bar once analysis is done
         else:
@@ -64,14 +75,23 @@ def analyze(link:str, classifier:str, progress_bar):
     except Exception as e:
         return str(e)
 
-st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Wasi Logo.png')+"</p>", unsafe_allow_html=True) #Centered Logo
+st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Wasi Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
+
 
 st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
+
+# horizontal Menu
+selected2 = option_menu(None, ["WASI", "History"],
+    icons=['youtube', 'clock-history'],
+    menu_icon="cast", default_index=0, orientation="horizontal")
+
+if selected2 == "History":
+    switch_page("history")
 
 link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
 with st.expander("Advance Settings"):
-    radio = st.radio("Choose Classifier:", options=("Naive Bayes (Recommended)","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
+    radio = st.radio("Choose Classifier:", options=("Naive Bayes","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
 
 message_placeholder = st.empty()  # initialize the message placeholder
 
@@ -93,7 +113,7 @@ if st.button("Analyze"):
 
 
 
-st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Uni Logo.png')+"</p>", unsafe_allow_html=True) #Centered Logo
+st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Uni Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
 #Remove hamburger menu + header+  footer
 hide_streamlit_style = """
             <style>

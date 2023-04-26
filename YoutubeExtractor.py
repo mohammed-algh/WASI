@@ -89,10 +89,20 @@ def startGet(link:str, choice:str,progress_bar):
 
     # get all comments
     get_comments(yt_object, video_id, '')
+
+    response = yt_object.videos().list(
+        part='snippet',
+        id=video_id
+    ).execute()
+
+    # Extract video title from response
+    video_title = response['items'][0]['snippet']['title']
+
+
     progress_bar.progress(50)
     time.sleep(0.3)
     recommendation, percentage, df = classify(all_comments, choice,progress_bar)
 
-    return recommendation, percentage, df
+    return recommendation, percentage, df, video_title
 
 
