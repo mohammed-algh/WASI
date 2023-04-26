@@ -5,7 +5,7 @@ from streamlit_cookies_manager import EncryptedCookieManager
 import pandas as pd
 from streamlit_option_menu import option_menu
 from streamlit_extras.switch_page_button import switch_page
-
+from Website import img_to_html
 
 
 st.set_page_config(
@@ -31,7 +31,10 @@ if not cookies.ready():
     st.stop()
 
 
-st.title("History")
+st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Wasi Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
+
+
+st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
 # horizontal Menu
 selected2 = option_menu(None, ["WASI", "History"],
     icons=['youtube', 'clock-history'],

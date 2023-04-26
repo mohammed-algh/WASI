@@ -87,29 +87,29 @@ selected2 = option_menu(None, ["WASI", "History"],
 
 if selected2 == "History":
     switch_page("history")
+with st.form("analysis"):
+    link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
-link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
+    with st.expander("Advance Settings"):
+        radio = st.radio("Choose Classifier:", options=("Naive Bayes","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
 
-with st.expander("Advance Settings"):
-    radio = st.radio("Choose Classifier:", options=("Naive Bayes","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
+    message_placeholder = st.empty()  # initialize the message placeholder
 
-message_placeholder = st.empty()  # initialize the message placeholder
+    progress_placeholder = st.empty()  # initialize the progress placeholder
 
-progress_placeholder = st.empty()  # initialize the progress placeholder
+    if st.form_submit_button("Analyze"):
+        if link.strip():
+            progress_bar = progress_placeholder.progress(0)  # initialize the progress bar with 0% inside the progress_placeholder
 
-if st.button("Analyze"):
-    if link.strip():
-        progress_bar = progress_placeholder.progress(0)  # initialize the progress bar with 0% inside the progress_placeholder
-
-        message_message = analyze(link, radio,progress_bar)
-        if message_message:
-            message_placeholder.write("<span style='color: #f9c13c;'>"+message_message+"</span>", unsafe_allow_html=True)
+            message_message = analyze(link, radio,progress_bar)
+            if message_message:
+                message_placeholder.write("<span style='color: #f9c13c;'>"+message_message+"</span>", unsafe_allow_html=True)
+            else:
+                message_placeholder.empty()  # clear the error message if there are no errors
+            progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
+            progress_bar.empty()  # clear the progress bar once analysis is done
         else:
-            message_placeholder.empty()  # clear the error message if there are no errors
-        progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
-        progress_bar.empty()  # clear the progress bar once analysis is done
-    else:
-         message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
+            message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
 
 
 
