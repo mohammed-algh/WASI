@@ -87,8 +87,8 @@ def wasi():
             link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
             with st.expander("Advance Settings"):
-                radio = st.radio("Choose Classifier:", options=("Naive Bayes","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
-
+                radio = st.radio("Choose Classifier:", options=("Naive Bayes (Recommended)","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
+                radio = radio if radio != "Naive Bayes (Recommended)" else "Naive Bayes"
             progress_placeholder = st.empty()  # initialize the progress placeholder
             in1,in2,in3, = st.columns((4.3,2.2,3.5))
             with in2:
