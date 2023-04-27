@@ -49,14 +49,13 @@ def wasi():
                 recommendation, percentage, df, video_title = startGet(link, classifier, progress_bar)  # pass the progress bar object to the startGet function
                 global wordcloud_image
                 wordcloud_image = generate_word_cloud(df,percentage)
-
                 if percentage > 60:
                     with st.container():
-                        st.success(f"{recommendation}")
+                        st.success(f"{recommendation}",icon="❇️")
                 elif percentage >=50:
-                    st.warning(f"{recommendation}")
+                    st.warning(f"{recommendation}",icon="⚖️")
                 else:
-                    st.error(f"{recommendation}")
+                    st.error(f"{recommendation}",icon="❤️‍🩹")
                 cookies[str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
                 cookies.save()
                 progress_bar.empty()  # clear the progress bar once analysis is done
@@ -73,9 +72,9 @@ def wasi():
 
     # horizontal Menu
 
-
     col1,col2,col3,col4,col5 = st.columns((2.5,5,.7,1.7,.1))
     with col2:
+        
         selected2 = option_menu(None, ["WASI", "History"],
         icons=['youtube', 'clock-history'],
         menu_icon="cast", default_index=0, orientation="horizontal")
@@ -91,25 +90,30 @@ def wasi():
             message_placeholder = st.empty()  # initialize the message placeholder
 
             progress_placeholder = st.empty()  # initialize the progress placeholder
+            in1,in2,in3, = st.columns((4.3,2.2,3.5))
+            with in2:
+                button = st.form_submit_button("Analyze")
+            in1,in2,in3, = st.columns((3.2,4,3.5))
+            with in2:
+                if button:
+                    if link.strip():
+                        progress_bar = progress_placeholder.progress(0)  # initialize the progress bar with 0% inside the progress_placeholder
 
-            if st.form_submit_button("Analyze"):
-                if link.strip():
-                    progress_bar = progress_placeholder.progress(0)  # initialize the progress bar with 0% inside the progress_placeholder
-
-                    message_message = analyze(link, radio,progress_bar)
-                    if message_message:
-                        message_placeholder.write("<span style='color: #f9c13c;'>"+message_message+"</span>", unsafe_allow_html=True)
+                        message_message = analyze(link, radio,progress_bar)
+                        if message_message:
+                                message_placeholder.write("<span style='color: #f9c13c;'>"+message_message+"</span>", unsafe_allow_html=True)
+                        else:
+                            message_placeholder.empty()  # clear the error message if there are no errors
+                        progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
+                        progress_bar.empty()  # clear the progress bar once analysis is done
                     else:
-                        message_placeholder.empty()  # clear the error message if there are no errors
-                    progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
-                    progress_bar.empty()  # clear the progress bar once analysis is done
-                else:
-                    message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
-
+                                message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
     with col4:
         if wordcloud_image is not None:
             with st.expander("Display Word Cloud"):
                 st.image(wordcloud_image, width=200)
+
+        
 
 
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Uni Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
