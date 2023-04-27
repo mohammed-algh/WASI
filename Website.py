@@ -56,6 +56,8 @@ def wasi():
                     st.warning(f"{recommendation}",icon="⚖️")
                 else:
                     st.error(f"{recommendation}",icon="❤️‍🩹")
+                with st.expander("Display Word Cloud"):
+                    st.image(wordcloud_image, width=267)
                 cookies[str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
                 cookies.save()
                 progress_bar.empty()  # clear the progress bar once analysis is done
@@ -72,7 +74,7 @@ def wasi():
 
     # horizontal Menu
 
-    col1,col2,col3,col4,col5 = st.columns((2.5,5,.7,1.7,.1))
+    col1,col2,col3= st.columns((2.5,5,2.5))
     with col2:
         
         selected2 = option_menu(None, ["WASI", "History"],
@@ -108,10 +110,7 @@ def wasi():
                         progress_bar.empty()  # clear the progress bar once analysis is done
                     else:
                                 message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
-    with col4:
-        if wordcloud_image is not None:
-            with st.expander("Display Word Cloud"):
-                st.image(wordcloud_image, width=200)
+
 
         
 
