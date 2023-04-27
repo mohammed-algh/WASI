@@ -10,7 +10,7 @@ from Website import img_to_html
 def history():
     st.set_page_config(
         page_title="History | WASI",
-        initial_sidebar_state="collapsed"
+        initial_sidebar_state="collapsed", layout="wide"
     )
 
     cookies = EncryptedCookieManager(
@@ -24,37 +24,38 @@ def history():
         # Wait for the component to load and send us current cookies.
         st.stop()
 
+    col1,col2,col3= st.columns((2.5,5,2.5))
+    with col2:
+        st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Wasi Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
 
-    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Wasi Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
 
+        st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
+        # horizontal Menu
+        selected2 = option_menu(None, ["WASI", "History"],
+            icons=['youtube', 'clock-history'],
+            menu_icon="cast", default_index=1, orientation="horizontal")
 
-    st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
-    # horizontal Menu
-    selected2 = option_menu(None, ["WASI", "History"],
-        icons=['youtube', 'clock-history'],
-        menu_icon="cast", default_index=1, orientation="horizontal")
+        if selected2 == "WASI":
+            switch_page("Website")
 
-    if selected2 == "WASI":
-        switch_page("Website")
+        df = pd.DataFrame(columns=["Title","Percentage","Classifier","Date"])
+        matches = re.findall(r"\{(.*?)\}",str(cookies.keys()))
+        keys = str(matches[0]).split(",")
+        if len(keys)>1:
+            cleand_keys = []
+            for i in keys:
+                between_quotes = i.split("'")[1]
+                before_colon = between_quotes.split("':")[0]
+                cleand_keys.append(before_colon)
+            cleand_keys.pop(0)
+            for i in cleand_keys[::-1]:
+                data = cookies[str(i)].split(";")
+                df = df.append({"Title":str(data[0]),"Percentage":str(data[1])+"%","Classifier":data[2],"Date":data[3][:19]}, ignore_index=True)
 
-    df = pd.DataFrame(columns=["Title","Percentage","Classifier","Date"])
-    matches = re.findall(r"\{(.*?)\}",str(cookies.keys()))
-    keys = str(matches[0]).split(",")
-    if len(keys)>1:
-        cleand_keys = []
-        for i in keys:
-            between_quotes = i.split("'")[1]
-            before_colon = between_quotes.split("':")[0]
-            cleand_keys.append(before_colon)
-        cleand_keys.pop(0)
-        for i in cleand_keys[::-1]:
-            data = cookies[str(i)].split(";")
-            df = df.append({"Title":str(data[0]),"Percentage":str(data[1])+"%","Classifier":data[2],"Date":data[3][:19]}, ignore_index=True)
+            st.table(df)
 
-        st.table(df)
-
-    else:
-        st.write("No History")
+        else:
+            st.write("No History")
 
 
     #Remove hamburger menu + header+  footer
