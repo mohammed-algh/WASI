@@ -87,11 +87,11 @@ def wasi():
             with st.expander("Advance Settings"):
                 radio = st.radio("Choose Classifier:", options=("Naive Bayes","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
 
-            message_placeholder = st.empty()  # initialize the message placeholder
-
             progress_placeholder = st.empty()  # initialize the progress placeholder
             in1,in2,in3, = st.columns((4.3,2.2,3.5))
             with in2:
+                
+                message_placeholder = st.empty()  # initialize the message placeholder
                 button = st.form_submit_button("Analyze")
             in1,in2,in3, = st.columns((3.2,4,3.5))
             with in2:
