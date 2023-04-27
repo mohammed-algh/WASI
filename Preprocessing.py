@@ -123,3 +123,11 @@ def doPreprocessing(text):
     text = removeStopwords(text)
     text = stemmer(text)
     return text
+def doPreprocessingWordCloud(text):
+    text = removeUrlHtml(text)
+    text = removeTashkeel(text)
+    text = removeSymbolNoise(text)
+    text = removeRepeated(text)
+    text = removeTatweel(text)
+    text = removeStopwords(text)
+    return text
