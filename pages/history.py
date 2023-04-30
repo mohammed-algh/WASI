@@ -51,7 +51,7 @@ def history():
             for i in cleand_keys[::-1]:
                 data = cookies[str(i)].split(";")
                 df = df.append({"Title":str(data[0]),"Percentage":str(data[1])+"%","Classifier":data[2],"Date":data[3][:19]}, ignore_index=True)
-
+            df.index += 1
             st.table(df)
 
         else:
