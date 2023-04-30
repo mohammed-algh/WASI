@@ -14,7 +14,7 @@ def count_percentage(prediction: np.ndarray):
 # recommendation function return recommendation word with percentage
 def recommendation(prediction: np.ndarray,progress_bar):
     percentage = count_percentage(prediction)
-    progress_bar.progress(100)
+    progress_bar.progress(85)
     time.sleep(0.3)
     if percentage < 0 or percentage > 100:
         raise ValueError('Percentage must be between 0 and 100')
@@ -48,7 +48,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         model = pickle.load(open("classifiers/SVM.pkl", "rb"))  # Load SVM classifier from .pkl file
         y = model.predict(X)  # Predict
         df["prediction"] = y
-        progress_bar.progress(90)
+        progress_bar.progress(75)
         time.sleep(0.1)
         recommend, percentage =recommendation(y, progress_bar)
         return recommend, percentage, df
@@ -58,7 +58,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         model = pickle.load(open("classifiers/NB.pkl", "rb"))  # Load Naive Bayes classifier from .pkl file
         y = model.predict(X)  # Predict
         df["prediction"] = y
-        progress_bar.progress(90)
+        progress_bar.progress(75)
         time.sleep(0.1)
         recommend, percentage =recommendation(y, progress_bar)
         return recommend, percentage, df
@@ -68,7 +68,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         model = pickle.load(open("classifiers/LR.pkl", "rb"))  # Load Logistic Regression classifier from .pkl file
         y = model.predict(X)  # Predict
         df["prediction"] = y
-        progress_bar.progress(90)
+        progress_bar.progress(75)
         time.sleep(0.1)
         recommend, percentage =recommendation(y, progress_bar)
         return recommend, percentage, df
@@ -78,7 +78,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         model = pickle.load(open("classifiers/KNN.pkl", "rb"))  # Load K-Nearest Neighbors classifier from .pkl file
         y = model.predict(X)  # Predict
         df["prediction"] = y
-        progress_bar.progress(90)
+        progress_bar.progress(75)
         time.sleep(0.1)
         recommend, percentage =recommendation(y, progress_bar)
         return recommend, percentage, df
@@ -88,7 +88,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         model = pickle.load(open("classifiers/DT.pkl", "rb"))  # Load Decision Tree classifier from .pkl file
         y = model.predict(X)  # Predict
         df["prediction"] = y
-        progress_bar.progress(90)
+        progress_bar.progress(75)
         time.sleep(0.1)
         recommend, percentage =recommendation(y, progress_bar)
         return recommend, percentage, df
@@ -98,7 +98,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         model = pickle.load(open("classifiers/RF.pkl", "rb"))  # Load Random Forest classifier from .pkl file
         y = model.predict(X)  # Predict
         df["prediction"] = y
-        progress_bar.progress(90)
+        progress_bar.progress(75)
         time.sleep(0.1)
         recommend, percentage =recommendation(y, progress_bar)
         return recommend, percentage, df

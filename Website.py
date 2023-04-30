@@ -1,5 +1,5 @@
 
-from YoutubeExtractor import startGet
+from YoutubeExtractor import startGet,get_video_info,get_video_id_no_bar
 import os
 import base64
 from pathlib import Path
@@ -9,6 +9,7 @@ import datetime
 from streamlit_option_menu import option_menu
 from streamlit_extras.switch_page_button import switch_page
 import streamlit as st
+import time
 
 wordcloud_image = None
 def img_to_bytes(img_path):
@@ -48,7 +49,12 @@ def wasi():
             if link.strip():  # check if the link parameter is not empty or whitespace
                 recommendation, percentage, df, video_title = startGet(link, classifier, progress_bar)  # pass the progress bar object to the startGet function
                 global wordcloud_image
+                video_id = get_video_id_no_bar(link)
+                video_info = get_video_info(video_id)
+                progress_bar.progress(90)
                 wordcloud_image = generate_word_cloud(df,percentage)
+                progress_bar.progress(100)
+                time.sleep(0.5)
                 if percentage > 60:
                     with st.container():
                         st.success(f"{recommendation}",icon="❇️")
@@ -56,7 +62,15 @@ def wasi():
                     st.warning(f"{recommendation}",icon="⚖️")
                 else:
                     st.error(f"{recommendation}",icon="❤️‍🩹")
-                with st.expander("Display Word Cloud"):
+                with st.expander("**Display Video Details**"):
+                    if video_info:
+                        st.write('**Title:**', video_info['title'])
+                        st.write('**Number of Comments:**', video_info['comment_count'])
+                        st.write('**Channel Name:**', video_info['channel_name'])
+                        st.write('**Publish Date:**', video_info['publish_date'])
+                    else:
+                        st.write('Could not retrieve video information.')
+                with st.expander("**Display Most Used Words**"):
                     st.image(wordcloud_image, width=267)
                 cookies[str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
                 cookies.save()

@@ -6,10 +6,33 @@ from Preprocessing import clean_youtube
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
 import time
-import pytube
+from datetime import datetime
 
 api_key = 'AIzaSyCeOTkJfH0_XNhpzeVg3zrDF3Xetgjbt9w'
+service_name = 'youtube'
+service_version = 'v3'
+youtube = build(service_name, service_version, developerKey=api_key)
 
+def get_video_id_no_bar(url):
+    full_url = unshorten_url(url)
+    parsed_url = urlparse(full_url)
+    videoId = parse_qs(parsed_url.query)['v'][0]
+    return videoId
+    
+def get_video_info(video_id):
+    video_info = youtube.videos().list(part='snippet,statistics', id=video_id).execute()
+    if video_info['items']:
+        video = video_info['items'][0]
+        title = video['snippet']['title']
+        publish_date_str = video['snippet']['publishedAt']
+        publish_date = datetime.strptime(publish_date_str, '%Y-%m-%dT%H:%M:%S%z')
+        publish_date_str_formatted = publish_date.strftime('%b %d, %Y at %I:%M %p')
+        channel_name = video['snippet']['channelTitle']
+        comment_count = video['statistics']['commentCount'] if 'statistics' in video and 'commentCount' in video['statistics'] else 0
+        return {'title': title, 'publish_date': publish_date_str_formatted, 'channel_name': channel_name, 'comment_count': comment_count}
+    else:
+        return None
+    
 all_comments = []
 
 def get_video_id(link:str,progress_bar)->str:
