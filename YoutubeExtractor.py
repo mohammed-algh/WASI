@@ -14,9 +14,12 @@ service_version = 'v3'
 youtube = build(service_name, service_version, developerKey=api_key)
 
 def get_video_id_no_bar(url):
-    full_url = unshorten_url(url)
-    parsed_url = urlparse(full_url)
-    videoId = parse_qs(parsed_url.query)['v'][0]
+    if "/shorts/" in url:
+        videoId = url.split("/shorts/")[1]
+    else:
+        full_url = unshorten_url(url)
+        parsed_url = urlparse(full_url)
+        videoId = parse_qs(parsed_url.query)['v'][0]
     return videoId
     
 def get_video_info(video_id):
@@ -36,11 +39,14 @@ def get_video_info(video_id):
 all_comments = []
 
 def get_video_id(link:str,progress_bar)->str:
-    full_url = unshorten_url(link)
-    progress_bar.progress(0)
-    parsed_url = urlparse(full_url)
-    # get the video id from the url
-    videoId = parse_qs(parsed_url.query)['v'][0]
+    if "/shorts/" in link:
+        videoId = link.split("/shorts/")[1]
+    else:
+        full_url = unshorten_url(link)
+        progress_bar.progress(0)
+        parsed_url = urlparse(full_url)
+        # get the video id from the url
+        videoId = parse_qs(parsed_url.query)['v'][0]
     time.sleep(0.5)
     progress_bar.progress(15)
     time.sleep(0.5)
