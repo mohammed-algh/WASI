@@ -38,24 +38,27 @@ def Login():
         st.stop()
     st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Wasi Logo.png')+"</p>", unsafe_allow_html=True) #Centered Logo
     st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
-    
-    with st.form("login_form"):
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        spinner_placeholder = st.empty()
-        status_placeholder = st.empty()
-        
-        if st.form_submit_button("Login"):
-            with spinner_placeholder:
-                with st.spinner("Authenticating..."):
-                    time.sleep(1)
-                    if authenticate(username, password):
-                        spinner_placeholder.empty()
-                        status_placeholder.success("Correct credentials, you will be redirected shortly...")
-                        time.sleep(1)
-                        switch_page("Website")
-                    else:
-                        status_placeholder.error("Incorrect username or password")
+    col1,col2,col3= st.columns((2.5,5,2.5))
+    with col2:
+        with st.form("login_form"):
+            username = st.text_input("Username")
+            password = st.text_input("Password", type="password")
+            spinner_placeholder = st.empty()
+            status_placeholder = st.empty()
+            
+            in1,in2,in3, = st.columns((3.7,4,2.3))
+            with in2:
+                if st.form_submit_button("Login"):
+                    with spinner_placeholder:
+                        with st.spinner("Authenticating..."):
+                            time.sleep(1)
+                            if authenticate(username, password):
+                                spinner_placeholder.empty()
+                                status_placeholder.success("Success! redirecting...")
+                                time.sleep(1)
+                                switch_page("Website")
+                            else:
+                                status_placeholder.error("Incorrect username or password")
     st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Uni Logo.png')+"</p>", unsafe_allow_html=True) #Centered Logo
 
 
