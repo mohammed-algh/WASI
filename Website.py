@@ -91,12 +91,14 @@ def wasi():
     col1,col2,col3= st.columns((2.5,5,2.5))
     with col2:
         
-        selected2 = option_menu(None, ["WASI", "History"],
-        icons=['youtube', 'clock-history'],
+        selected2 = option_menu(None, ["WASI", "History","Logout"],
+        icons=['youtube', 'clock-history','box-arrow-left'],
         menu_icon="cast", default_index=0, orientation="horizontal")
 
         if selected2 == "History":
             switch_page("history")
+        if selected2 == "Logout":
+            switch_page("login")
         with st.form("analysis"):
             link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 

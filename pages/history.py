@@ -31,12 +31,13 @@ def history():
 
         st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
         # horizontal Menu
-        selected2 = option_menu(None, ["WASI", "History"],
-            icons=['youtube', 'clock-history'],
-            menu_icon="cast", default_index=1, orientation="horizontal")
-
+        selected2 = option_menu(None, ["WASI", "History","Logout"],
+        icons=['youtube', 'clock-history','box-arrow-left'],
+        menu_icon="cast", default_index=1, orientation="horizontal")
         if selected2 == "WASI":
             switch_page("Website")
+        if selected2 == "Logout":
+            switch_page("login")
 
         df = pd.DataFrame(columns=["Title","Percentage","Classifier","Date"])
         matches = re.findall(r"\{(.*?)\}",str(cookies.keys()))
