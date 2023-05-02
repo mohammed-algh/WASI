@@ -61,8 +61,21 @@ def Login():
                                 status_placeholder.error("Incorrect username or password")
     st.markdown("<p style='text-align: center; color: grey;'>"+img_to_html('Uni Logo.png')+"</p>", unsafe_allow_html=True) #Centered Logo
 
-
-
+#Remove hamburger menu + header+  footer
+    styles = """
+        <style>
+        [data-testid="collapsedControl"] {
+            display: none
+        }
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+                .stProgress > div > div > div > div {
+                    background-image: radial-gradient(ellipse at center, #ff6464, #ff0000);
+                }
+        </style>
+    """
+    st.markdown(styles, unsafe_allow_html=True)
     # Initialize a session state variable that tracks the sidebar state (either 'expanded' or 'collapsed').
 if __name__ == '__main__':
     Login()
