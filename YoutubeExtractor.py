@@ -61,7 +61,8 @@ def unshorten_url(url:str)->str:
 # extract comments from video
 def get_comments(youtube, video_id, next_view_token):
     global all_comments
-
+    comment_list = None
+    
     # check for token
     if len(next_view_token.strip()) == 0:
         all_comments = []
@@ -83,7 +84,8 @@ def get_comments(youtube, video_id, next_view_token):
     # loop through all comments
     author_ID_List = []
     for comment in comment_list['items']:
-
+        author_ID = None
+        author_Comment = None
         # add comment to list
         if len(clean_youtube(str([comment['snippet']['topLevelComment']['snippet']['textDisplay']]))) >=3 :
             try:
