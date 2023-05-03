@@ -75,11 +75,9 @@ def get_comments(youtube, video_id, next_view_token):
             comment_list = youtube.commentThreads().list(part = 'snippet', maxResults = 100, videoId = video_id, order='relevance', pageToken=next_view_token).execute()
     except Exception as error:
         if "commentsDisabled" in str(error):
-            print("Comment of this video disabled")
-            print()
+            raise ValueError("Comment of this video disabled")
         if "videoNotFound" in str(error):
-            print("Video not found")
-            print()
+            raise ValueError("Video not found")
 
     # loop through all comments
     author_ID_List = []

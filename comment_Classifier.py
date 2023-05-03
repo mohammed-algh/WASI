@@ -39,7 +39,7 @@ def classify(comments_list:list, choice:str,progress_bar):
     X = df["comment"] # assign comment column to X variable
     progress_bar.progress(57)
     time.sleep(0.1)
-    if len(X) == 0:
+    if len(X) <= 20:
         raise ValueError("Not enough comments to analyze the video")
 
 
