@@ -4,15 +4,17 @@ import numpy as np
 from Preprocessing import doPreprocessing
 import sklearn
 import time
+
+
 # function to count percentage of positive comments
 def count_percentage(prediction: np.ndarray):
     positive_count = np.count_nonzero(prediction == 1)
-    percentage = (positive_count/ len(prediction)) * 100
+    percentage = (positive_count / len(prediction)) * 100
     return int(percentage)
 
 
 # recommendation function return recommendation word with percentage
-def recommendation(prediction: np.ndarray,progress_bar):
+def recommendation(prediction: np.ndarray, progress_bar):
     percentage = count_percentage(prediction)
     progress_bar.progress(85)
     time.sleep(0.3)
@@ -32,16 +34,15 @@ def recommendation(prediction: np.ndarray,progress_bar):
     elif percentage <= 100:
         return f"Strongly recommended ({percentage}%)", percentage
 
-# classify function to start predicting
-def classify(comments_list:list, choice:str,progress_bar):
 
+# classify function to start predicting
+def classify(comments_list: list, choice: str, progress_bar):
     df = pd.DataFrame(comments_list, columns=['comment'])  # Convert comment_list to dataframe
-    X = df["comment"] # assign comment column to X variable
+    X = df["comment"]  # assign comment column to X variable
     progress_bar.progress(57)
     time.sleep(0.1)
     if len(X) <= 20:
         raise ValueError("Not enough comments to analyze the video")
-
 
     # SVM
     if choice == "SVM":
@@ -50,7 +51,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         df["prediction"] = y
         progress_bar.progress(75)
         time.sleep(0.1)
-        recommend, percentage =recommendation(y, progress_bar)
+        recommend, percentage = recommendation(y, progress_bar)
         return recommend, percentage, df
 
     # Naive Bayes
@@ -60,7 +61,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         df["prediction"] = y
         progress_bar.progress(75)
         time.sleep(0.1)
-        recommend, percentage =recommendation(y, progress_bar)
+        recommend, percentage = recommendation(y, progress_bar)
         return recommend, percentage, df
 
     # Logistic Regression
@@ -70,7 +71,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         df["prediction"] = y
         progress_bar.progress(75)
         time.sleep(0.1)
-        recommend, percentage =recommendation(y, progress_bar)
+        recommend, percentage = recommendation(y, progress_bar)
         return recommend, percentage, df
 
     # K-Nearest Neighbors
@@ -80,7 +81,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         df["prediction"] = y
         progress_bar.progress(75)
         time.sleep(0.1)
-        recommend, percentage =recommendation(y, progress_bar)
+        recommend, percentage = recommendation(y, progress_bar)
         return recommend, percentage, df
 
     # Decision Tree
@@ -90,7 +91,7 @@ def classify(comments_list:list, choice:str,progress_bar):
         df["prediction"] = y
         progress_bar.progress(75)
         time.sleep(0.1)
-        recommend, percentage =recommendation(y, progress_bar)
+        recommend, percentage = recommendation(y, progress_bar)
         return recommend, percentage, df
 
     # Random Forest
@@ -100,14 +101,9 @@ def classify(comments_list:list, choice:str,progress_bar):
         df["prediction"] = y
         progress_bar.progress(75)
         time.sleep(0.1)
-        recommend, percentage =recommendation(y, progress_bar)
+        recommend, percentage = recommendation(y, progress_bar)
         return recommend, percentage, df
 
     else:
         print("Wrong input")
         progress_bar.progress(0)
-
-
-
-
-

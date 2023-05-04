@@ -1,4 +1,3 @@
-
 from YoutubeExtractor import startGet
 
 condition = True
@@ -7,8 +6,9 @@ while condition:
 
     link = str(input("Enter Video Link: "))
     try:
+        choice = "Naive Bayes (Recommended)"
 
-            # classifiers menu
+        # classifiers menu
         output = int(input("Choose:\n"
                            "1- SVM\n"
                            "2- Naive Bayes\n"
@@ -31,8 +31,6 @@ while condition:
             choice = "Random Forest"
         else:
             print("Wrong input")
-
-
 
         recommendation = startGet(link, choice)
         print(recommendation)

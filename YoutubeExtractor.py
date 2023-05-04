@@ -13,6 +13,7 @@ service_name = 'youtube'
 service_version = 'v3'
 youtube = build(service_name, service_version, developerKey=api_key)
 
+
 def get_video_id_no_bar(url):
     if "/shorts/" in url:
         videoId = url.split("/shorts/")[1]
@@ -21,7 +22,8 @@ def get_video_id_no_bar(url):
         parsed_url = urlparse(full_url)
         videoId = parse_qs(parsed_url.query)['v'][0]
     return videoId
-    
+
+
 def get_video_info(video_id):
     video_info = youtube.videos().list(part='snippet,statistics', id=video_id).execute()
     if video_info['items']:
@@ -31,14 +33,18 @@ def get_video_info(video_id):
         publish_date = datetime.strptime(publish_date_str, '%Y-%m-%dT%H:%M:%S%z')
         publish_date_str_formatted = publish_date.strftime('%b %d, %Y at %I:%M %p')
         channel_name = video['snippet']['channelTitle']
-        comment_count = video['statistics']['commentCount'] if 'statistics' in video and 'commentCount' in video['statistics'] else 0
-        return {'title': title, 'publish_date': publish_date_str_formatted, 'channel_name': channel_name, 'comment_count': comment_count}
+        comment_count = video['statistics']['commentCount'] if 'statistics' in video and 'commentCount' in video[
+            'statistics'] else 0
+        return {'title': title, 'publish_date': publish_date_str_formatted, 'channel_name': channel_name,
+                'comment_count': comment_count}
     else:
         return None
-    
+
+
 all_comments = []
 
-def get_video_id(link:str,progress_bar)->str:
+
+def get_video_id(link: str, progress_bar) -> str:
     if "/shorts/" in link:
         videoId = link.split("/shorts/")[1]
     else:
@@ -52,27 +58,31 @@ def get_video_id(link:str,progress_bar)->str:
     time.sleep(0.5)
     return videoId
 
+
 # function for unshort urls
-def unshorten_url(url:str)->str:
+def unshorten_url(url: str) -> str:
     session = requests.Session()
     response = session.head(url, allow_redirects=True)
     return response.url
+
 
 # extract comments from video
 def get_comments(youtube, video_id, next_view_token):
     global all_comments
     comment_list = None
-    
+
     # check for token
     if len(next_view_token.strip()) == 0:
         all_comments = []
     try:
         if next_view_token == '':
             # get the initial response
-            comment_list = youtube.commentThreads().list(part = 'snippet', maxResults = 100, videoId = video_id, order = 'relevance').execute()
+            comment_list = youtube.commentThreads().list(part='snippet', maxResults=100, videoId=video_id,
+                                                         order='relevance').execute()
         else:
             # get the next page response
-            comment_list = youtube.commentThreads().list(part = 'snippet', maxResults = 100, videoId = video_id, order='relevance', pageToken=next_view_token).execute()
+            comment_list = youtube.commentThreads().list(part='snippet', maxResults=100, videoId=video_id,
+                                                         order='relevance', pageToken=next_view_token).execute()
     except Exception as error:
         if "commentsDisabled" in str(error):
             raise ValueError("Comment of this video disabled")
@@ -85,7 +95,7 @@ def get_comments(youtube, video_id, next_view_token):
         author_ID = None
         author_Comment = None
         # add comment to list
-        if len(clean_youtube(str([comment['snippet']['topLevelComment']['snippet']['textDisplay']]))) >=3 :
+        if len(clean_youtube(str([comment['snippet']['topLevelComment']['snippet']['textDisplay']]))) >= 3:
             try:
                 author_ID = [comment['snippet']['topLevelComment']['snippet']['authorChannelId']['value']]
                 author_Comment = [comment['snippet']['topLevelComment']['snippet']['textDisplay']]
@@ -98,16 +108,16 @@ def get_comments(youtube, video_id, next_view_token):
 
                 all_comments.append(*author_Comment)
 
-
     if "nextPageToken" in comment_list:
         return get_comments(youtube, video_id, comment_list['nextPageToken'])
     else:
         return
 
-def startGet(link:str, choice:str,progress_bar):
+
+def startGet(link: str, choice: str, progress_bar):
     global video_id
     try:
-        video_id = get_video_id(link,progress_bar)
+        video_id = get_video_id(link, progress_bar)
         progress_bar.progress(30)
         time.sleep(0.5)
     except:
@@ -127,11 +137,8 @@ def startGet(link:str, choice:str,progress_bar):
     # Extract video title from response
     video_title = response['items'][0]['snippet']['title']
 
-
     progress_bar.progress(50)
     time.sleep(0.3)
-    recommendation, percentage, df = classify(all_comments, choice,progress_bar)
+    recommendation, percentage, df = classify(all_comments, choice, progress_bar)
 
     return recommendation, percentage, df, video_title
-
-

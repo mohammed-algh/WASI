@@ -4,8 +4,7 @@ from nltk.stem.isri import ISRIStemmer
 import pyarabic.araby
 from textblob import TextBlob
 
-
-stops = set(stopwords.words("arabic")) # assign all stop words
+stops = set(stopwords.words("arabic"))  # assign all stop words
 # stop words
 stop_word = {"،", "آض", "آمينَ", "آه", "آهاً", "آي", "أ", "أب", "أجل", "أجمع", "أخ", "أخذ", "أصبح", "أضحى",
              "أقبل", "أقل", "أكثر", "ألا", "أم", "أما", "أمامك", "أمامكَ", "أمسى", "أمّا", "أن", "أنا", "أنت",
@@ -50,29 +49,30 @@ stop_word = {"،", "آض", "آمينَ", "آه", "آهاً", "آي", "أ", "أب
              "وَيْ", "وٝشْكَانََ", "يكون", "يمكن", "يوم", "ّأيّان"}
 
 
-
-
 def removeUrlHtml(text):
     text = re.sub("<a[\s\S]*<[\s\S]a>", " ", text)  # Remove HTML link tag
     text = re.sub("<br>", " ", text)  # Remove HTML break line tag
     text = re.sub("http\S+", "", text)  # Remove URL
     return text
 
+
 def removeTashkeel(text):
-    text = pyarabic.araby.strip_tashkeel(text) # Remove Tashkeel
+    text = pyarabic.araby.strip_tashkeel(text)  # Remove Tashkeel
     text = pyarabic.araby.strip_diacritics(text)  # Strip diacritics from a text, include harakats and small letters
     return text
 
+
 def removeSymbolNoise(text):
     symbols = {'~', ':', "'", '+', '[', '\\', '@', '^', '{', '%', '(', '-', '"', '*', '|', ',', '&', '<', '`', '}',
-                '.', '=', ']', '!', '>', ';', '?', '$', ')', '/', '،', '؟', '×', '÷', '‘', '؛'}
-    text = re.sub("_"," ",text) # Remove underscore, add space
-    text = re.sub("\W"," ",text) # Remove hashtag, add space
-    text = re.sub("\d+","",text) # Remove digits
-    return "".join([w for w in text if w not in symbols]) # Remove symbols
+               '.', '=', ']', '!', '>', ';', '?', '$', ')', '/', '،', '؟', '×', '÷', '‘', '؛'}
+    text = re.sub("_", " ", text)  # Remove underscore, add space
+    text = re.sub("\W", " ", text)  # Remove hashtag, add space
+    text = re.sub("\d+", "", text)  # Remove digits
+    return "".join([w for w in text if w not in symbols])  # Remove symbols
+
 
 def removeRepeated(text):
-    text = re.sub(r'(.)\1\1+', r"\1", text) # Remove repeated
+    text = re.sub(r'(.)\1\1+', r"\1", text)  # Remove repeated
     return text
 
 
@@ -87,16 +87,19 @@ def textNormalize(text):
 
 
 def removeTatweel(text):
-    text = pyarabic.araby.strip_tatweel(text) # Strip Tatweel from the text
+    text = pyarabic.araby.strip_tatweel(text)  # Strip Tatweel from the text
     return text
 
 
 def removeStopwords(text):
     sep = TextBlob(text)
-    word = sep.words # Separate sentences into words
-    return " ".join([w for w in word if w not in stops and w not in stop_word and len(w) >= 2]) # Exclude stop words
+    word = sep.words  # Separate sentences into words
+    return " ".join([w for w in word if w not in stops and w not in stop_word and len(w) >= 2])  # Exclude stop words
+
 
 st = ISRIStemmer()
+
+
 def stemmer(text):
     sep = TextBlob(text)
     words = sep.words
@@ -123,6 +126,8 @@ def doPreprocessing(text):
     text = removeStopwords(text)
     text = stemmer(text)
     return text
+
+
 def doPreprocessingWordCloud(text):
     text = removeUrlHtml(text)
     text = removeTashkeel(text)

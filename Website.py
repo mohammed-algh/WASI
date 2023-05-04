@@ -1,5 +1,4 @@
-
-from YoutubeExtractor import startGet,get_video_info,get_video_id_no_bar
+from YoutubeExtractor import startGet, get_video_info, get_video_id_no_bar
 import os
 import base64
 from pathlib import Path
@@ -12,18 +11,19 @@ import streamlit as st
 import time
 
 wordcloud_image = None
+
+
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
     encoded = base64.b64encode(img_bytes).decode()
     return encoded
+
+
 def img_to_html(img_path):
     img_html = "<img src='data:image/png;base64,{}' style='max-width: 230px;' class='img-fluid'>".format(
-      img_to_bytes(img_path)
+        img_to_bytes(img_path)
     )
     return img_html
-
-
-
 
 
 def wasi():
@@ -43,25 +43,25 @@ def wasi():
         # Wait for the component to load and send us current cookies.
         st.stop()
 
-
-    def analyze(link:str, classifier:str, progress_bar):
+    def analyze(link: str, classifier: str, progress_bar):
         try:
             if link.strip():  # check if the link parameter is not empty or whitespace
-                recommendation, percentage, df, video_title = startGet(link, classifier, progress_bar)  # pass the progress bar object to the startGet function
+                recommendation, percentage, df, video_title = startGet(link, classifier,
+                                                                       progress_bar)  # pass the progress bar object to the startGet function
                 global wordcloud_image
                 video_id = get_video_id_no_bar(link)
                 video_info = get_video_info(video_id)
                 progress_bar.progress(90)
-                wordcloud_image = generate_word_cloud(df,percentage)
+                wordcloud_image = generate_word_cloud(df, percentage)
                 progress_bar.progress(100)
                 time.sleep(0.5)
                 if percentage > 60:
                     with st.container():
-                        st.success(f"{recommendation}",icon="❇️")
-                elif percentage >=50:
-                    st.warning(f"{recommendation}",icon="⚖️")
+                        st.success(f"{recommendation}", icon="❇️")
+                elif percentage >= 50:
+                    st.warning(f"{recommendation}", icon="⚖️")
                 else:
-                    st.error(f"{recommendation}",icon="❤️‍🩹")
+                    st.error(f"{recommendation}", icon="❤️‍🩹")
                 with st.expander("**Display Video Details**"):
                     if video_info:
                         st.write('**Title:**', video_info['title'])
@@ -72,7 +72,8 @@ def wasi():
                         st.write('Could not retrieve video information.')
                 with st.expander("**Display Most Used Words**"):
                     st.image(wordcloud_image, width=267)
-                cookies[str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
+                cookies[
+                    str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
                 cookies.save()
                 progress_bar.empty()  # clear the progress bar once analysis is done
             else:
@@ -81,19 +82,19 @@ def wasi():
         except Exception as e:
             return str(e)
 
-    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Wasi Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
-
+    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html("images/Wasi Logo.png") + "</p>",
+                unsafe_allow_html=True)  # Centered Logo
 
     st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
 
     # horizontal Menu
 
-    col1,col2,col3= st.columns((2.5,5,2.5))
+    col1, col2, col3 = st.columns((2.5, 5, 2.5))
     with col2:
-        
-        selected2 = option_menu(None, ["WASI", "History","Logout"],
-        icons=['youtube', 'clock-history','box-arrow-left'],
-        menu_icon="cast", default_index=0, orientation="horizontal")
+
+        selected2 = option_menu(None, ["WASI", "History", "Logout"],
+                                icons=['youtube', 'clock-history', 'box-arrow-left'],
+                                menu_icon="cast", default_index=0, orientation="horizontal")
 
         if selected2 == "History":
             switch_page("history")
@@ -103,36 +104,38 @@ def wasi():
             link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
 
             with st.expander("Advance Settings"):
-                radio = st.radio("Choose Classifier:", options=("Naive Bayes (Recommended)","SVM","Random Forest","Decision Tree","KNN", "Logistic Regression"), horizontal=True )
+                radio = st.radio("Choose Classifier:", options=(
+                "Naive Bayes (Recommended)", "SVM", "Random Forest", "Decision Tree", "KNN", "Logistic Regression"),
+                                 horizontal=True)
                 radio = radio if radio != "Naive Bayes (Recommended)" else "Naive Bayes"
             progress_placeholder = st.empty()  # initialize the progress placeholder
-            in1,in2,in3, = st.columns((4.3,2.2,3.5))
+            in1, in2, in3, = st.columns((4.3, 2.2, 3.5))
             with in2:
-                
+
                 message_placeholder = st.empty()  # initialize the message placeholder
                 button = st.form_submit_button("Analyze")
-            in1,in2,in3, = st.columns((3.2,4,3.5))
+            in1, in2, in3, = st.columns((3.2, 4, 3.5))
             with in2:
                 if button:
                     if link.strip():
-                        progress_bar = progress_placeholder.progress(0)  # initialize the progress bar with 0% inside the progress_placeholder
+                        progress_bar = progress_placeholder.progress(
+                            0)  # initialize the progress bar with 0% inside the progress_placeholder
 
-                        message_message = analyze(link, radio,progress_bar)
+                        message_message = analyze(link, radio, progress_bar)
                         if message_message:
-                                message_placeholder.write("<span style='color: #f9c13c;'>"+message_message+"</span>", unsafe_allow_html=True)
+                            message_placeholder.write("<span style='color: #f9c13c;'>" + message_message + "</span>",
+                                                      unsafe_allow_html=True)
                         else:
                             message_placeholder.empty()  # clear the error message if there are no errors
                         progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
                         progress_bar.empty()  # clear the progress bar once analysis is done
                     else:
-                                message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>", unsafe_allow_html=True)
+                        message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>",
+                                                  unsafe_allow_html=True)
 
-
-        
-
-
-    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('Uni Logo.png') + "</p>", unsafe_allow_html=True) #Centered Logo
-    #Remove hamburger menu + header+  footer
+    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
+                unsafe_allow_html=True)  # Centered Logo
+    # Remove hamburger menu + header+  footer
 
     styles = """
         <style>
@@ -149,7 +152,8 @@ def wasi():
     """
     st.markdown(styles, unsafe_allow_html=True)
 
-
     # Initialize a session state variable that tracks the sidebar state (either 'expanded' or 'collapsed').
+
+
 if __name__ == '__main__':
     wasi()
