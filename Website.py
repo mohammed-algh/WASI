@@ -8,6 +8,7 @@ import datetime
 from streamlit_option_menu import option_menu
 from streamlit_extras.switch_page_button import switch_page
 import streamlit as st
+from streamlit.components.v1 import iframe
 import time
 
 wordcloud_image = None
