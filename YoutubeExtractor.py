@@ -8,7 +8,7 @@ from urllib.parse import parse_qs
 import time
 from datetime import datetime
 
-api_key = 'YOUTUBE_API_KEY'
+api_key = 'AIzaSyCeOTkJfH0_XNhpzeVg3zrDF3Xetgjbt9w'
 service_name = 'youtube'
 service_version = 'v3'
 youtube = build(service_name, service_version, developerKey=api_key)

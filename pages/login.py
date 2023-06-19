@@ -66,7 +66,7 @@ def Login():
                                 switch_page("Website")
                             else:
                                 status_placeholder.error("Incorrect username or password")
-    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Wasi Logo.png') + "</p>",
+    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
 
     # Remove hamburger menu + header+  footer

@@ -68,10 +68,15 @@ def wasi():
                         st.write('**Number of Comments:**', video_info['comment_count'])
                         st.write('**Channel Name:**', video_info['channel_name'])
                         st.write('**Publish Date:**', video_info['publish_date'])
+                        #Generate embed code
+                        embed_code = f"https://www.youtube.com/embed/{video_id}"
+
+                        #Display the embedded video
+                        st.components.v1.iframe(embed_code)
                     else:
                         st.write('Could not retrieve video information.')
                 with st.expander("**Display Most Used Words**"):
-                    st.image(wordcloud_image, width=267)
+                    st.image(wordcloud_image)
                 cookies[
                     str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
                 cookies.save()
@@ -88,7 +93,8 @@ def wasi():
     st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
 
     # horizontal Menu
-
+    if 'session_state' not in st.session_state:
+        st.session_state['session_state'] = {}
     col1, col2, col3 = st.columns((2.5, 5, 2.5))
     with col2:
 
@@ -100,8 +106,21 @@ def wasi():
             switch_page("history")
         if selected2 == "Logout":
             switch_page("login")
+        b1,b2,b3= st.columns((3.33,3.33,3.33))
+        with b1:
+            if st.button("Sample: Positive Video"):
+                st.session_state.session_state['link'] = "https://youtu.be/EQEsrGUcjZ4"  # Set the link to ٍSample 1
+            
+        with b2:   
+            if st.button("Sample: Neutral Video"):
+                st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to Sample 2
+        with b3:
+            if st.button("Sample: Negative Video"):
+                st.session_state.session_state['link'] = "https://youtu.be/igIdKdjU5WE"  # Set the link to Sample 3
+        
+        
         with st.form("analysis"):
-            link = st.text_input("Enter Youtube Link Here", placeholder="E.g. https://www.youtube.com")
+            link = st.text_input("Enter Youtube Link Here", value=st.session_state['session_state'].get('link', ''),  placeholder="E.g. https://www.youtube.com")
 
             with st.expander("Advance Settings"):
                 radio = st.radio("Choose Classifier:", options=(
