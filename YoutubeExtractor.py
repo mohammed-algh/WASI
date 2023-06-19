@@ -7,8 +7,9 @@ from urllib.parse import urlparse
 from urllib.parse import parse_qs
 import time
 from datetime import datetime
+import streamlit as st
 
-api_key = 'AIzaSyCeOTkJfH0_XNhpzeVg3zrDF3Xetgjbt9w'
+api_key = st.secrets["YOUTUBE_KEY"]
 service_name = 'youtube'
 service_version = 'v3'
 youtube = build(service_name, service_version, developerKey=api_key)

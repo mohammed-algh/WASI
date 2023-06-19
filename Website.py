@@ -109,7 +109,7 @@ def wasi():
         b1,b2,b3= st.columns((3.33,3.33,3.33))
         with b1:
             if st.button("Sample: Positive Video"):
-                st.session_state.session_state['link'] = "https://youtu.be/EQEsrGUcjZ4"  # Set the link to ٍSample 1
+                st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to ٍSample 1
             
         with b2:   
             if st.button("Sample: Neutral Video"):
