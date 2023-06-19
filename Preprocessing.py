@@ -6,6 +6,7 @@ from textblob import TextBlob
 
 import nltk
 nltk.download('stopwords')
+nltk.download('all')
 
 stops = set(stopwords.words("arabic"))  # assign all stop words
 # stop words
