@@ -113,7 +113,7 @@ def wasi():
             
         with b2:   
             if st.button("Sample: Neutral Video"):
-                st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to Sample 2
+                st.session_state.session_state['link'] = "https://youtu.be/6Nm3y0A8Fqk"  # Set the link to Sample 2
         with b3:
             if st.button("Sample: Negative Video"):
                 st.session_state.session_state['link'] = "https://youtu.be/igIdKdjU5WE"  # Set the link to Sample 3
