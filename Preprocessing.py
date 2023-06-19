@@ -4,6 +4,9 @@ from nltk.stem.isri import ISRIStemmer
 import pyarabic.araby
 from textblob import TextBlob
 
+import nltk
+nltk.download('stopwords')
+
 stops = set(stopwords.words("arabic"))  # assign all stop words
 # stop words
 stop_word = {"،", "آض", "آمينَ", "آه", "آهاً", "آي", "أ", "أب", "أجل", "أجمع", "أخ", "أخذ", "أصبح", "أضحى",
