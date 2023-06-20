@@ -109,14 +109,14 @@ def wasi():
             switch_page("login")
         b1,b2,b3= st.columns((3.33,3.33,3.33))
         with b1:
-            if st.button("Sample: Positive"):
+            if st.button("Positive"):
                 st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to ٍSample 1
             
         with b2:   
-            if st.button("Sample: Neutral"):
+            if st.button("Neutral"):
                 st.session_state.session_state['link'] = "https://youtu.be/6Nm3y0A8Fqk"  # Set the link to Sample 2
         with b3:
-            if st.button("Sample: Negative"):
+            if st.button("Negative"):
                 st.session_state.session_state['link'] = "https://youtu.be/igIdKdjU5WE"  # Set the link to Sample 3
         
         
