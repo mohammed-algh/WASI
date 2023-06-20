@@ -134,7 +134,7 @@ def wasi():
 
                 message_placeholder = st.empty()  # initialize the message placeholder
                 button = st.form_submit_button("Analyze")
-            in1, in2, in3, = st.columns((3.2, 4, 3.5))
+            in1, in2, in3, = st.columns((1.2, 8, 1.5))
             with in2:
                 if button:
                     if link.strip():
