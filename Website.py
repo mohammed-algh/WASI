@@ -168,6 +168,12 @@ def wasi():
                 .stProgress > div > div > div > div {
                     background-image: radial-gradient(ellipse at center, #ff6464, #ff0000);
                 }
+                #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.css-uf99v8.egzxvld5 > div.block-container.css-z5fcl4.egzxvld4 > div:nth-child(1) > div > div.css-ocqkz7.e1tzin5v3 > div.css-keje6w.e1tzin5v1 > div:nth-child(1) > div > div.css-ocqkz7.e1tzin5v3 > div:nth-child(1) > div:nth-child(1) > div > div > div > button
+                { background:#28a745; color:white;}
+                #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.css-uf99v8.egzxvld5 > div.block-container.css-z5fcl4.egzxvld4 > div:nth-child(1) > div > div.css-ocqkz7.e1tzin5v3 > div.css-keje6w.e1tzin5v1 > div:nth-child(1) > div > div.css-ocqkz7.e1tzin5v3 > div:nth-child(2) > div:nth-child(1) > div > div > div > button
+                { background:#eea236; color:white;}
+                #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.css-uf99v8.egzxvld5 > div.block-container.css-z5fcl4.egzxvld4 > div:nth-child(1) > div > div.css-ocqkz7.e1tzin5v3 > div.css-keje6w.e1tzin5v1 > div:nth-child(1) > div > div.css-ocqkz7.e1tzin5v3 > div:nth-child(3) > div:nth-child(1) > div > div > div > button
+                { background:#f44336; color:white;}
         </style>
     """
     st.markdown(styles, unsafe_allow_html=True)
