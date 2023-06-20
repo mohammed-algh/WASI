@@ -108,7 +108,7 @@ def wasi():
         if selected2 == "Logout":
             switch_page("login")
         st.text("Sample Videos:")
-        b1,b2,b3= st.columns((0.33,0.33,0.33))
+        b1,b2,b3= st.columns(3)
         with b1:
             if st.button("Positive"):
                 st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to ٍSample 1
@@ -130,7 +130,7 @@ def wasi():
                                  horizontal=True)
                 radio = radio if radio != "Naive Bayes (Recommended)" else "Naive Bayes"
             progress_placeholder = st.empty()  # initialize the progress placeholder
-            in1, in2, in3, = st.columns((2.3, 2.2, 2.5))
+            in1, in2, in3, = st.columns(3)
             with in2:
 
                 message_placeholder = st.empty()  # initialize the message placeholder
