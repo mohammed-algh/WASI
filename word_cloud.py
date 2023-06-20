@@ -38,6 +38,7 @@ stopwords = {"،", "آض", "آمينَ", "آه", "آهاً", "آي", "أ", "أب
              "كما", "كي", "كيت", "كيف", "كيفما", "كَأَنَّ", "كِخ", "لئن", "لا", "لات", "لاسيما", "لدن", "لدى",
              "لعمر", "لقاء", "لك", "لكم", "لكما", "لكن", "لكنَّما", "لكي", "لكيلا", "للامم", "لم", "لما",
              "لمّا", "لن", "لنا", "له", "لها", "لو", "لوكالة", "لولا", "لوما", "لي", "لَسْتَ", "لَسْتُ",
+             "والله","الله"
              }
 
 
@@ -56,6 +57,6 @@ def generate_word_cloud(df, percentage):
     text = get_display(text)
     text = doPreprocessingWordCloud(text)
     # Generate the word cloud
-    wordcloud = WordCloud(width=800, height=800, background_color='white', font_path='arial.ttf').generate(text)
+    wordcloud = WordCloud(width=800, height=800, background_color='white', font_path='DINNextLTArabic-Light.ttf').generate(text)
     image = wordcloud.to_image()
     return image
