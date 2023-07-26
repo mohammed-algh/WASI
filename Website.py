@@ -124,7 +124,7 @@ def wasi():
         
         
         with st.form("analysis"):
-            link = st.text_input("ادخل رابط المقطع", value=st.session_state['session_state'].get('link', ''),  placeholder="E.g. https://www.youtube.com")
+            link = st.text_input("ادخل رابط المقطع:", value=st.session_state['session_state'].get('link', ''),  placeholder="E.g. https://www.youtube.com")
 
             with st.expander("الاعدادات المتقدمة"):
                 radio = st.radio("اختر نموذج الذكاء الاصطناعي:", options=(
