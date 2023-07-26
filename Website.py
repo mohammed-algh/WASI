@@ -102,7 +102,7 @@ def wasi():
         selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
                                 icons=['youtube', 'clock-history', 'box-arrow-left'],
                                 menu_icon="cast", default_index=0, orientation="horizontal",styles={
-        "container": {"font-family": "Tajawal Medium", "direction": "rtl"}
+        "container": {"font-family": "Droid Arabic Kufi", "direction": "rtl"}
         })
 
         if selected2 == "السجل":
