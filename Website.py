@@ -88,10 +88,10 @@ def wasi():
         except Exception as e:
             return str(e)
 
-    st.markdown("<p>" + img_to_html("images/Wasi Logo.png") + "</p>",
+    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html("images/Wasi Logo.png") + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
 
-    st.markdown("<h3><br><br></h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center;'><br><br></h3>", unsafe_allow_html=True)
 
     # horizontal Menu
     if 'session_state' not in st.session_state:
