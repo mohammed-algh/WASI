@@ -29,7 +29,7 @@ def authenticate(username, password):
 
 def Login():
     st.set_page_config(
-        page_title="WASI | Login", initial_sidebar_state="collapsed"
+        page_title="واصي | تسجيل الدخول", initial_sidebar_state="collapsed"
     )
     cookies = EncryptedCookieManager(
         # This prefix will get added to all your cookie names.
@@ -44,34 +44,46 @@ def Login():
         st.stop()
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Wasi Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
-    st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center;'><br><br></h3>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns((2.5, 5, 2.5))
     with col2:
         with st.form("login_form"):
-            username = st.text_input("Username")
-            password = st.text_input("Password", type="password")
+            username = st.text_input("اسم المستخدم")
+            password = st.text_input("كلمة المرور", type="password")
             spinner_placeholder = st.empty()
             status_placeholder = st.empty()
 
             in1, in2, in3, = st.columns((3.7, 4, 2.3))
             with in2:
-                if st.form_submit_button("Login"):
+                if st.form_submit_button("دخول"):
                     with spinner_placeholder:
-                        with st.spinner("Authenticating..."):
+                        with st.spinner("توثيق الحساب..."):
                             time.sleep(1)
                             if authenticate(username, password):
                                 spinner_placeholder.empty()
-                                status_placeholder.success("Success! redirecting...")
+                                status_placeholder.success("تم التوثيق بنجاح! يتم الآن نقلك لواصي...")
                                 time.sleep(1)
                                 switch_page("Website")
                             else:
-                                status_placeholder.error("Incorrect username or password")
+                                status_placeholder.error("اسم المستخدم أو كلمة المرور غير صحيحة.")
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
 
     # Remove hamburger menu + header+  footer
     styles = """
         <style>
+        @font-face {
+            font-family: 'arabic';
+            font-style: normal;
+            font-weight: 400;
+            src: url("https://db.onlinewebfonts.com/t/7712e50ecac759e968ac145c0c4a6d33.woff2")format("woff2");
+        }
+
+        html, body, [class*="css"]  {
+            font-family: 'arabic';
+            direction: rtl;
+            text-align: right;
+        }
         [data-testid="collapsedControl"] {
             display: none
         }
