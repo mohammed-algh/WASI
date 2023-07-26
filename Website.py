@@ -29,7 +29,7 @@ def img_to_html(img_path):
 
 def wasi():
     st.set_page_config(
-        page_title="WASI | Arabic Youtube Recommender", initial_sidebar_state="collapsed", layout="wide"
+        page_title="واصي | أداة التوصية العربية لمقاطع اليوتيوب", initial_sidebar_state="collapsed", layout="wide"
     )
 
     cookies = EncryptedCookieManager(
@@ -63,27 +63,27 @@ def wasi():
                     st.warning(f"{recommendation}", icon="⚖️")
                 else:
                     st.error(f"{recommendation}", icon="❤️‍🩹")
-                with st.expander("**Display Video Details**"):
+                with st.expander("**عرض معلومات الفيديو**"):
                     if video_info:
-                        st.write('**Title:**', video_info['title'])
-                        st.write('**Number of Comments:**', video_info['comment_count'])
-                        st.write('**Channel Name:**', video_info['channel_name'])
-                        st.write('**Publish Date:**', video_info['publish_date'])
+                        st.write('**العنوان:**', video_info['title'])
+                        st.write('**عدد التعليقات:**', video_info['comment_count'])
+                        st.write('**اسم القناة:**', video_info['channel_name'])
+                        st.write('**تاريخ النشر:**', video_info['publish_date'])
                         #Generate embed code
                         embed_code = f"https://www.youtube.com/embed/{video_id}"
 
                         #Display the embedded video
                         st.components.v1.iframe(embed_code)
                     else:
-                        st.write('Could not retrieve video information.')
-                with st.expander("**Display Most Used Words**"):
+                        st.write('فشلت عملية الحصول على معلومات المقطع.')
+                with st.expander("**عرض الكلمات الأكثر شيوعًا**"):
                     st.image(wordcloud_image)
                 cookies[
                     str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
                 cookies.save()
                 progress_bar.empty()  # clear the progress bar once analysis is done
             else:
-                return "Invalid link"
+                return "الرابط المدخل غير صحيح."
 
         except Exception as e:
             return str(e)
@@ -99,33 +99,35 @@ def wasi():
     col1, col2, col3 = st.columns((2.5, 5, 2.5))
     with col2:
 
-        selected2 = option_menu(None, ["WASI", "History", "Logout"],
+        selected2 = option_menu(None, ["واصي", "السجل", "تسجيل الخروج"],
                                 icons=['youtube', 'clock-history', 'box-arrow-left'],
-                                menu_icon="cast", default_index=0, orientation="horizontal")
+                                menu_icon="cast", default_index=0, orientation="horizontal",styles={
+        "container": {"font-family": "Tajawal Medium", "direction": "rtl"}
+        })
 
-        if selected2 == "History":
+        if selected2 == "السجل":
             switch_page("history")
-        if selected2 == "Logout":
+        if selected2 == "تسجيل الخروج":
             switch_page("login")
-        st.text("Sample Videos:")
+        st.text("مقاطع للتجربة:")
         b1,b2,b3= st.columns((3.33,3.33,3.33))
         with b1:
-            if st.button("Positive Video"):
+            if st.button("مقطع إيجابي"):
                 st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to ٍSample 1
             
         with b2:   
-            if st.button("Neutral Video"):
+            if st.button("مقطع حيادي"):
                 st.session_state.session_state['link'] = "https://youtu.be/6Nm3y0A8Fqk"  # Set the link to Sample 2
         with b3:
-            if st.button("Negative Video"):
+            if st.button("مقطع سلبي"):
                 st.session_state.session_state['link'] = "https://youtu.be/igIdKdjU5WE"  # Set the link to Sample 3
         
         
         with st.form("analysis"):
-            link = st.text_input("Enter Youtube Link Here", value=st.session_state['session_state'].get('link', ''),  placeholder="E.g. https://www.youtube.com")
+            link = st.text_input("ادخل رابط المقطع", value=st.session_state['session_state'].get('link', ''),  placeholder="E.g. https://www.youtube.com")
 
-            with st.expander("Advance Settings"):
-                radio = st.radio("Choose Classifier:", options=(
+            with st.expander("الاعدادات المتقدمة"):
+                radio = st.radio("اختر نموذج الذكاء الاصطناعي:", options=(
                 "Naive Bayes (Recommended)", "SVM", "Random Forest", "Decision Tree", "KNN", "Logistic Regression"),
                                  horizontal=True)
                 radio = radio if radio != "Naive Bayes (Recommended)" else "Naive Bayes"
@@ -134,7 +136,7 @@ def wasi():
             with in2:
 
                 message_placeholder = st.empty()  # initialize the message placeholder
-                button = st.form_submit_button("Analyze")
+                button = st.form_submit_button("تحليل المقطع")
             in1, in2, in3, = st.columns((1.2, 8, 1.5))
             with in2:
                 if button:
@@ -151,7 +153,7 @@ def wasi():
                         progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
                         progress_bar.empty()  # clear the progress bar once analysis is done
                     else:
-                        message_placeholder.write("<span style='color: #f9c13c;'>Invalid link</span>",
+                        message_placeholder.write("<span style='color: #f9c13c;'>الرابط المدخل غير صحيح.</span>",
                                                   unsafe_allow_html=True)
 
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
@@ -160,6 +162,18 @@ def wasi():
 
     styles = """
         <style>
+        @font-face {
+            font-family: 'arabic';
+            font-style: normal;
+            font-weight: 400;
+            src: url("https://db.onlinewebfonts.com/t/7712e50ecac759e968ac145c0c4a6d33.woff2")format("woff2");
+        }
+
+        html, body, [class*="css"]  {
+            font-family: 'arabic';
+            direction: rtl;
+            text-align: right;
+        }
         [data-testid="collapsedControl"] {
             display: none
         }
