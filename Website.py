@@ -102,7 +102,7 @@ def wasi():
         selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
                                 icons=['youtube', 'clock-history', 'box-arrow-left'],
                                 menu_icon="cast", default_index=0, orientation="horizontal",styles={
-        "container": {"font-family": "DINNextLTArabic-Light", "direction": "rtl"}
+        "container": {"font-family": "Tahoma", "direction": "rtl"}
         })
 
         if selected2 == "السجل":
@@ -120,7 +120,7 @@ def wasi():
                 st.session_state.session_state['link'] = "https://youtu.be/6Nm3y0A8Fqk"  # Set the link to Sample 2
         with b3:
             if st.button("مقطع سلبي"):
-                st.session_state.session_state['link'] = "https://youtu.be/igIdKdjU5WE"  # Set the link to Sample 3
+                st.session_state.session_state['link'] = "https://youtu.be/DGx7dNA_Y3I"  # Set the link to Sample 3
         
         
         with st.form("analysis"):
