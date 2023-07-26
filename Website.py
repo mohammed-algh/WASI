@@ -91,7 +91,7 @@ def wasi():
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html("images/Wasi Logo.png") + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
 
-    st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center;'><br><br></h3>", unsafe_allow_html=True)
 
     # horizontal Menu
     if 'session_state' not in st.session_state:
@@ -107,7 +107,7 @@ def wasi():
 
         if selected2 == "السجل":
             switch_page("history")
-        if selected2 == "تسجيل الخروج":
+        if selected2 == "خروج":
             switch_page("login")
         st.text("مقاطع للتجربة:")
         b1,b2,b3= st.columns((3.33,3.33,3.33))
