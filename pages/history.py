@@ -35,8 +35,13 @@ def history():
         selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
                                 icons=['youtube', 'clock-history', 'box-arrow-left'],
                                 menu_icon="cast", default_index=1, orientation="horizontal",styles={
-        "container": {"font-family": "Nadeem", "direction": "rtl"}
-        })
+        "container": {"font-family": "arabic", "direction": "rtl", "@font-face": {
+            "font-family": 'arabic',
+            "font-style": "normal",
+            "font-weight": "400",
+            "src": "url(\"https://db.onlinewebfonts.com/t/7712e50ecac759e968ac145c0c4a6d33.woff2\")format(\"woff2\")"}
+        }}
+        )
         if selected2 == "واصي":
             switch_page("Website")
         if selected2 == "خروج":
