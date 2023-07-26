@@ -44,7 +44,7 @@ def Login():
         st.stop()
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Wasi Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
-    st.markdown("<h3 style='text-align: center;'><br><br></h3>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center;'><br></h3>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns((2.5, 5, 2.5))
     with col2:
         with st.form("login_form"):
