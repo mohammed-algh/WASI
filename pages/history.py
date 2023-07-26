@@ -30,17 +30,19 @@ def history():
         st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Wasi Logo.png') + "</p>",
                     unsafe_allow_html=True)  # Centered Logo
 
-        st.markdown("<h3 style='text-align: center;'>WASI | Arabic Youtube Recommender</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align: center;'><br><br></h3>", unsafe_allow_html=True)
         # horizontal Menu
-        selected2 = option_menu(None, ["WASI", "History", "Logout"],
+        selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
                                 icons=['youtube', 'clock-history', 'box-arrow-left'],
-                                menu_icon="cast", default_index=1, orientation="horizontal")
-        if selected2 == "WASI":
+                                menu_icon="cast", default_index=1, orientation="horizontal",styles={
+        "container": {"font-family": "Tahoma", "direction": "rtl"}
+        })
+        if selected2 == "واصي":
             switch_page("Website")
-        if selected2 == "Logout":
+        if selected2 == "خروج":
             switch_page("login")
 
-        df = pd.DataFrame(columns=["Title", "Percentage", "Classifier", "Date"])
+        df = pd.DataFrame(columns=["عنوان المقطع", "نسبة التوصية", "نموذج الذكاء الإصطناعي", "تاريخ التحليل"])
         matches = re.findall(r"\{(.*?)\}", str(cookies.keys()))
         keys = str(matches[0]).split(",")
         if len(keys) > 1:
@@ -52,13 +54,13 @@ def history():
             cleand_keys.pop(0)
             for i in cleand_keys[::-1]:
                 data = cookies[str(i)].split(";")
-                df = df.append({"Title": str(data[0]), "Percentage": str(data[1]) + "%", "Classifier": data[2],
-                                "Date": data[3][:19]}, ignore_index=True)
+                df = df.append({"عنوان المقطع": str(data[0]), "نسبة التوصية": str(data[1]) + "%", "نموذج الذكاء الإصطناعي": data[2],
+                                "تاريخ التحليل": data[3][:19]}, ignore_index=True)
             df.index += 1
             st.table(df)
 
         else:
-            st.write("No History")
+            st.write("لا يوجد سجلّات سابقة.")
 
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
@@ -66,6 +68,18 @@ def history():
 
     styles = """
         <style>
+        @font-face {
+            font-family: 'arabic';
+            font-style: normal;
+            font-weight: 400;
+            src: url("https://db.onlinewebfonts.com/t/7712e50ecac759e968ac145c0c4a6d33.woff2")format("woff2");
+        }
+
+        html, body, [class*="css"]  {
+            font-family: 'arabic';
+            direction: rtl;
+            text-align: right;
+        }
             div[data-testid="stSidebarNav"] {display: none;}
             .css-1iyw2u1 {
             display: none;
