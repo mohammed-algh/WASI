@@ -19,20 +19,20 @@ def recommendation(prediction: np.ndarray, progress_bar):
     progress_bar.progress(85)
     time.sleep(0.3)
     if percentage < 0 or percentage > 100:
-        raise ValueError('Percentage must be between 0 and 100')
+        raise ValueError('النسبة يجب ان تكون بين 0% و 100%')
 
     if percentage <= 30:
-        return f"Not recommended ({percentage}%)", percentage
+        return f"غير موصى به على الإطلاق({percentage}%)", percentage
     elif percentage <= 50:
-        return f"Unlikely to be effective ({percentage}%)", percentage
+        return f"يرجّح عدم مشاهدة هذا المقطع ({percentage}%)", percentage
     elif percentage <= 60:
-        return f"Moderately effective ({percentage}%)", percentage
+        return f"محتوى المقطع محايد ({percentage}%)", percentage
     elif percentage <= 70:
-        return f"Recommended ({percentage}%)", percentage
+        return f"موصى به ({percentage}%)", percentage
     elif percentage <= 80:
-        return f"Highly recommended ({percentage}%)", percentage
+        return f"موصى به للغاية ({percentage}%)", percentage
     elif percentage <= 100:
-        return f"Strongly recommended ({percentage}%)", percentage
+        return f"موصى به بشدة ({percentage}%)", percentage
 
 
 # classify function to start predicting

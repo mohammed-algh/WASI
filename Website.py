@@ -136,7 +136,7 @@ def wasi():
             with in2:
 
                 message_placeholder = st.empty()  # initialize the message placeholder
-                button = st.form_submit_button("تحليل المقطع")
+                button = st.form_submit_button("تحليل")
             in1, in2, in3, = st.columns((1.2, 8, 1.5))
             with in2:
                 if button:
