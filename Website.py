@@ -99,7 +99,7 @@ def wasi():
     col1, col2, col3 = st.columns((2.5, 5, 2.5))
     with col2:
 
-        selected2 = option_menu(None, ["واصي", "السجل", "تسجيل الخروج"],
+        selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
                                 icons=['youtube', 'clock-history', 'box-arrow-left'],
                                 menu_icon="cast", default_index=0, orientation="horizontal",styles={
         "container": {"font-family": "Tajawal Medium", "direction": "rtl"}
