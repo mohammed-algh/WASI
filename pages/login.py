@@ -65,7 +65,7 @@ def Login():
                                 time.sleep(1)
                                 switch_page("Website")
                             else:
-                                status_placeholder.error("اسم المستخدم أو كلمة المرور غير صحيحة.")
+                                status_placeholder.error("اسم المستخدم أو كلمة المرور غير صحيحان.")
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
 
