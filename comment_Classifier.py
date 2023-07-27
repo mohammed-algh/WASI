@@ -22,7 +22,7 @@ def recommendation(prediction: np.ndarray, progress_bar):
         raise ValueError('النسبة يجب ان تكون بين 0% و 100%')
 
     if percentage <= 30:
-        return f"غير موصى به على الإطلاق({percentage}%)", percentage
+        return f"غير موصى به على الإطلاق ({percentage}%)", percentage
     elif percentage <= 50:
         return f"يرجّح عدم مشاهدة هذا المقطع ({percentage}%)", percentage
     elif percentage <= 60:
