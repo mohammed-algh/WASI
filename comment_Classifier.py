@@ -42,7 +42,7 @@ def classify(comments_list: list, choice: str, progress_bar):
     progress_bar.progress(57)
     time.sleep(0.1)
     if len(X) <= 20:
-        raise ValueError("Not enough comments to analyze the video")
+        raise ValueError("عدد التعليقات لا يكفي لتحليل المقطع")
 
     # SVM
     if choice == "SVM":
@@ -105,5 +105,5 @@ def classify(comments_list: list, choice: str, progress_bar):
         return recommend, percentage, df
 
     else:
-        print("Wrong input")
+        print("الرابط المدخل غير صحيح")
         progress_bar.progress(0)
