@@ -53,19 +53,17 @@ def Login():
             spinner_placeholder = st.empty()
             status_placeholder = st.empty()
 
-            in1, in2, in3, = st.columns((3.7, 4, 2.3))
-            with in2:
-                if st.form_submit_button("دخول"):
-                    with spinner_placeholder:
-                        with st.spinner("توثيق الحساب..."):
+            if st.form_submit_button("دخول"):
+                with spinner_placeholder:
+                    with st.spinner("توثيق الحساب..."):
+                        time.sleep(1)
+                        if authenticate(username, password):
+                            spinner_placeholder.empty()
+                            status_placeholder.success("تم التوثيق بنجاح! يتم الآن نقلك لواصي...")
                             time.sleep(1)
-                            if authenticate(username, password):
-                                spinner_placeholder.empty()
-                                status_placeholder.success("تم التوثيق بنجاح! يتم الآن نقلك لواصي...")
-                                time.sleep(1)
-                                switch_page("Website")
-                            else:
-                                status_placeholder.error("اسم المستخدم أو كلمة المرور غير صحيحان.")
+                            switch_page("Website")
+                        else:
+                            status_placeholder.error("اسم المستخدم أو كلمة المرور غير صحيحان.")
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
 

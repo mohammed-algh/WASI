@@ -110,11 +110,16 @@ def wasi():
         if selected2 == "خروج":
             switch_page("login")
         st.text("مقاطع للتجربة:")
-        if st.button("مقطع إيجابي"):
+        b1,b2,b3= st.columns((3.33,3.33,3.33))
+        with b1:
+            if st.button("مقطع إيجابي"):
                 st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to ٍSample 1
-        if st.button("مقطع حيادي"):
+            
+        with b2:   
+            if st.button("مقطع حيادي"):
                 st.session_state.session_state['link'] = "https://youtu.be/6Nm3y0A8Fqk"  # Set the link to Sample 2
-        if st.button("مقطع سلبي"):
+        with b3:
+            if st.button("مقطع سلبي"):
                 st.session_state.session_state['link'] = "https://youtu.be/DGx7dNA_Y3I"  # Set the link to Sample 3
         
         
@@ -127,11 +132,8 @@ def wasi():
                                  horizontal=True)
                 radio = radio if radio != "Naive Bayes (Recommended)" else "Naive Bayes"
             progress_placeholder = st.empty()  # initialize the progress placeholder
-            in1, in2, in3, = st.columns((4.3, 2.2, 3.5))
-            with in2:
-
-                message_placeholder = st.empty()  # initialize the message placeholder
-                button = st.form_submit_button("تحليل")
+            message_placeholder = st.empty()  # initialize the message placeholder
+            button = st.form_submit_button("تحليل")
             in1, in2, in3, = st.columns((1.2, 8, 1.5))
             with in2:
                 if button:
