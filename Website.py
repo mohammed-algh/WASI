@@ -110,16 +110,11 @@ def wasi():
         if selected2 == "خروج":
             switch_page("login")
         st.text("مقاطع للتجربة:")
-        b1,b2,b3= st.columns((3.33,3.33,3.33))
-        with b1:
-            if st.button("مقطع إيجابي"):
+        if st.button("مقطع إيجابي"):
                 st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to ٍSample 1
-            
-        with b2:   
-            if st.button("مقطع حيادي"):
+        if st.button("مقطع حيادي"):
                 st.session_state.session_state['link'] = "https://youtu.be/6Nm3y0A8Fqk"  # Set the link to Sample 2
-        with b3:
-            if st.button("مقطع سلبي"):
+        if st.button("مقطع سلبي"):
                 st.session_state.session_state['link'] = "https://youtu.be/DGx7dNA_Y3I"  # Set the link to Sample 3
         
         
