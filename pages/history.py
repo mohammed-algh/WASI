@@ -25,47 +25,47 @@ def history():
         # Wait for the component to load and send us current cookies.
         st.stop()
 
-    col1, col2, col3 = st.columns((2.5, 5, 2.5))
-    with col2:
-        st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Wasi Logo.png') + "</p>",
-                    unsafe_allow_html=True)  # Centered Logo
+    # col1, col2, col3 = st.columns((2.5, 5, 2.5))
+    # with col2:
+    st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Wasi Logo.png') + "</p>",
+                unsafe_allow_html=True)  # Centered Logo
 
-        st.markdown("<h3 style='text-align: center;'><br><br></h3>", unsafe_allow_html=True)
-        # horizontal Menu
-        selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
-                                icons=['youtube', 'clock-history', 'box-arrow-left'],
-                                menu_icon="cast", default_index=1, orientation="horizontal",styles={
-        "container": {"font-family": "arabic", "direction": "rtl", "@font-face": {
-            "font-family": 'arabic',
-            "font-style": "normal",
-            "font-weight": "400",
-            "src": "url(\"https://db.onlinewebfonts.com/t/7712e50ecac759e968ac145c0c4a6d33.woff2\")format(\"woff2\")"}
-        }}
-        )
-        if selected2 == "واصي":
-            switch_page("Website")
-        if selected2 == "خروج":
-            switch_page("login")
+    st.markdown("<h3 style='text-align: center;'><br><br></h3>", unsafe_allow_html=True)
+    # horizontal Menu
+    selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
+                            icons=['youtube', 'clock-history', 'box-arrow-left'],
+                            menu_icon="cast", default_index=1, orientation="horizontal",styles={
+    "container": {"font-family": "arabic", "direction": "rtl", "@font-face": {
+        "font-family": 'arabic',
+        "font-style": "normal",
+        "font-weight": "400",
+        "src": "url(\"https://db.onlinewebfonts.com/t/7712e50ecac759e968ac145c0c4a6d33.woff2\")format(\"woff2\")"}
+    }}
+    )
+    if selected2 == "واصي":
+        switch_page("Website")
+    if selected2 == "خروج":
+        switch_page("login")
 
-        df = pd.DataFrame(columns=["عنوان المقطع", "نسبة التوصية", "نموذج الذكاء الإصطناعي", "تاريخ التحليل"])
-        matches = re.findall(r"\{(.*?)\}", str(cookies.keys()))
-        keys = str(matches[0]).split(",")
-        if len(keys) > 1:
-            cleand_keys = []
-            for i in keys:
-                between_quotes = i.split("'")[1]
-                before_colon = between_quotes.split("':")[0]
-                cleand_keys.append(before_colon)
-            cleand_keys.pop(0)
-            for i in cleand_keys[::-1]:
-                data = cookies[str(i)].split(";")
-                df = df.append({"عنوان المقطع": str(data[0]), "نسبة التوصية": str(data[1]) + "%", "نموذج الذكاء الإصطناعي": data[2],
-                                "تاريخ التحليل": data[3][:19]}, ignore_index=True)
-            df.index += 1
-            st.table(df)
+    df = pd.DataFrame(columns=["عنوان المقطع", "نسبة التوصية", "نموذج الذكاء الإصطناعي", "تاريخ التحليل"])
+    matches = re.findall(r"\{(.*?)\}", str(cookies.keys()))
+    keys = str(matches[0]).split(",")
+    if len(keys) > 1:
+        cleand_keys = []
+        for i in keys:
+            between_quotes = i.split("'")[1]
+            before_colon = between_quotes.split("':")[0]
+            cleand_keys.append(before_colon)
+        cleand_keys.pop(0)
+        for i in cleand_keys[::-1]:
+            data = cookies[str(i)].split(";")
+            df = df.append({"عنوان المقطع": str(data[0]), "نسبة التوصية": str(data[1]) + "%", "نموذج الذكاء الإصطناعي": data[2],
+                            "تاريخ التحليل": data[3][:19]}, ignore_index=True)
+        df.index += 1
+        st.table(df)
 
-        else:
-            st.write("لا يوجد سجلّات سابقة.")
+    else:
+        st.write("لا يوجد سجلّات سابقة.")
 
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
