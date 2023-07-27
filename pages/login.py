@@ -45,25 +45,23 @@ def Login():
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Wasi Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
     st.markdown("<h3 style='text-align: center;'><br></h3>", unsafe_allow_html=True)
-    col1, col2, col3 = st.columns((2.5, 5, 2.5))
-    with col2:
-        with st.form("login_form"):
-            username = st.text_input("اسم المستخدم")
-            password = st.text_input("كلمة المرور", type="password")
-            spinner_placeholder = st.empty()
-            status_placeholder = st.empty()
+    with st.form("login_form"):
+        username = st.text_input("اسم المستخدم")
+        password = st.text_input("كلمة المرور", type="password")
+        spinner_placeholder = st.empty()
+        status_placeholder = st.empty()
 
-            if st.form_submit_button("دخول"):
-                with spinner_placeholder:
-                    with st.spinner("توثيق الحساب..."):
+        if st.form_submit_button("دخول"):
+            with spinner_placeholder:
+                with st.spinner("توثيق الحساب..."):
+                    time.sleep(1)
+                    if authenticate(username, password):
+                        spinner_placeholder.empty()
+                        status_placeholder.success("تم التوثيق بنجاح! يتم الآن نقلك لواصي...")
                         time.sleep(1)
-                        if authenticate(username, password):
-                            spinner_placeholder.empty()
-                            status_placeholder.success("تم التوثيق بنجاح! يتم الآن نقلك لواصي...")
-                            time.sleep(1)
-                            switch_page("Website")
-                        else:
-                            status_placeholder.error("اسم المستخدم أو كلمة المرور غير صحيحان.")
+                        switch_page("Website")
+                    else:
+                        status_placeholder.error("اسم المستخدم أو كلمة المرور غير صحيحان.")
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
 
