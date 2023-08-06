@@ -133,7 +133,7 @@ def wasi():
             radio = radio if radio != "Naive Bayes (Recommended)" else "Naive Bayes"
         progress_placeholder = st.empty()  # initialize the progress placeholder
         message_placeholder = st.empty()  # initialize the message placeholder
-        button = st.form_submit_button("تحليل")
+        button = st.form_submit_button("بدء التحليل الآن!")
         in1, in2, in3, = st.columns((1.2, 8, 1.5))
         with in2:
             if button:
