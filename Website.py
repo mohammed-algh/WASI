@@ -123,7 +123,7 @@ def wasi():
         st.session_state.session_state['link'] = "https://youtu.be/DGx7dNA_Y3I"  # Set the link to Sample 3
 
     with st.form("analysis"):
-        link = st.text_input("ادخل رابط المقطع:", value=st.session_state['session_state'].get('link', ''),
+        link = st.text_input("ادخل رابط أي مقطع يوتيوب:", value=st.session_state['session_state'].get('link', ''),
                              placeholder="E.g. https://www.youtube.com")
 
         with st.expander("الاعدادات المتقدمة"):
