@@ -78,9 +78,9 @@ def wasi():
                         st.write('فشلت عملية الحصول على معلومات المقطع.')
                 with st.expander("**عرض الكلمات الأكثر شيوعًا**"):
                     st.image(wordcloud_image)
-                cookies[
-                    str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
-                cookies.save()
+                # cookies[
+                #     str(datetime.datetime.now())] = f"{str(video_title)};{str(percentage)};{str(classifier)};{str(datetime.datetime.now())}"
+                # cookies.save()
                 progress_bar.empty()  # clear the progress bar once analysis is done
             else:
                 return "الرابط المدخل غير صحيح."
@@ -99,16 +99,16 @@ def wasi():
     # col1, col2, col3 = st.columns((2.5, 5, 2.5))
     # with col2:
 
-    selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
-                            icons=['youtube', 'clock-history', 'box-arrow-left'],
-                            menu_icon="cast", default_index=0, orientation="horizontal", styles={
-            "container": {"font-family": "Nadeem", "direction": "rtl", "text-align": "right"}
-        })
+    # selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
+    #                         icons=['youtube', 'clock-history', 'box-arrow-left'],
+    #                         menu_icon="cast", default_index=0, orientation="horizontal", styles={
+    #         "container": {"font-family": "Nadeem", "direction": "rtl", "text-align": "right"}
+    #     })
 
-    if selected2 == "السجل":
-        switch_page("history")
-    if selected2 == "خروج":
-        switch_page("login")
+    # if selected2 == "السجل":
+    #     switch_page("history")
+    # if selected2 == "خروج":
+    #     switch_page("login")
     st.text("مقاطع للتجربة:")
     # b1,b2,b3= st.columns((3.33,3.33,3.33))
     # with b1:
