@@ -69,10 +69,10 @@ def wasi():
                         st.write('**عدد التعليقات:**', video_info['comment_count'])
                         st.write('**اسم القناة:**', video_info['channel_name'])
                         st.write('**تاريخ النشر:**', video_info['publish_date'])
-                        #Generate embed code
+                        # Generate embed code
                         embed_code = f"https://www.youtube.com/embed/{video_id}"
 
-                        #Display the embedded video
+                        # Display the embedded video
                         st.components.v1.iframe(embed_code)
                     else:
                         st.write('فشلت عملية الحصول على معلومات المقطع.')
@@ -101,9 +101,9 @@ def wasi():
 
     selected2 = option_menu(None, ["واصي", "السجل", "خروج"],
                             icons=['youtube', 'clock-history', 'box-arrow-left'],
-                            menu_icon="cast", default_index=0, orientation="horizontal",styles={
-    "container": {"font-family": "Nadeem", "direction": "rtl", "text-align": "right"}
-    })
+                            menu_icon="cast", default_index=0, orientation="horizontal", styles={
+            "container": {"font-family": "Nadeem", "direction": "rtl", "text-align": "right"}
+        })
 
     if selected2 == "السجل":
         switch_page("history")
@@ -114,22 +114,22 @@ def wasi():
     # with b1:
     if st.button("مقطع إيجابي"):
         st.session_state.session_state['link'] = "https://youtu.be/fUxLgISJqCI"  # Set the link to ٍSample 1
-        
+
     # with b2:   
     if st.button("مقطع حيادي"):
         st.session_state.session_state['link'] = "https://youtu.be/6Nm3y0A8Fqk"  # Set the link to Sample 2
     # with b3:
     if st.button("مقطع سلبي"):
         st.session_state.session_state['link'] = "https://youtu.be/DGx7dNA_Y3I"  # Set the link to Sample 3
-    
-    
+
     with st.form("analysis"):
-        link = st.text_input("ادخل رابط المقطع:", value=st.session_state['session_state'].get('link', ''),  placeholder="E.g. https://www.youtube.com")
+        link = st.text_input("ادخل رابط المقطع:", value=st.session_state['session_state'].get('link', ''),
+                             placeholder="E.g. https://www.youtube.com")
 
         with st.expander("الاعدادات المتقدمة"):
             radio = st.radio("اختر نموذج الذكاء الاصطناعي:", options=(
-            "Naive Bayes (Recommended)", "SVM", "Random Forest", "Decision Tree", "KNN", "Logistic Regression"),
-                                horizontal=True)
+                "Naive Bayes (Recommended)", "SVM", "Random Forest", "Decision Tree", "KNN", "Logistic Regression"),
+                             horizontal=True)
             radio = radio if radio != "Naive Bayes (Recommended)" else "Naive Bayes"
         progress_placeholder = st.empty()  # initialize the progress placeholder
         message_placeholder = st.empty()  # initialize the message placeholder
@@ -144,14 +144,14 @@ def wasi():
                     message_message = analyze(link, radio, progress_bar)
                     if message_message:
                         message_placeholder.write("<span style='color: #f9c13c;'>" + message_message + "</span>",
-                                                    unsafe_allow_html=True)
+                                                  unsafe_allow_html=True)
                     else:
                         message_placeholder.empty()  # clear the error message if there are no errors
                     progress_placeholder.empty()  # clear the progress_placeholder once analysis is done
                     progress_bar.empty()  # clear the progress bar once analysis is done
                 else:
                     message_placeholder.write("<span style='color: #f9c13c;'>الرابط المدخل غير صحيح.</span>",
-                                                unsafe_allow_html=True)
+                                              unsafe_allow_html=True)
 
     st.markdown("<p style='text-align: center; color: grey;'>" + img_to_html('images/Uni Logo.png') + "</p>",
                 unsafe_allow_html=True)  # Centered Logo
