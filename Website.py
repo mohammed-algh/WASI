@@ -186,6 +186,8 @@ def wasi():
                 { background:#eea236; color:white;}
                 #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.css-uf99v8.egzxvld5 > div.block-container.css-z5fcl4.egzxvld4 > div:nth-child(1) > div > div:nth-child(7) > div > button
                 { background:#f44336; color:white;}
+                #root > div:nth-child(1) > div.withScreencast > div > div > div > section.main.css-uf99v8.egzxvld5 > div.block-container.css-z5fcl4.egzxvld4 > div:nth-child(1) > div > div.css-12ttj6m.epcbefy1 > div:nth-child(1) > div > div:nth-child(5) > div > div > button
+                { background:#ddd; color:white;}
         </style>
     """
     st.markdown(styles, unsafe_allow_html=True)
